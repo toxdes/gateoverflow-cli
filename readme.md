@@ -24,9 +24,9 @@
 | `h`         | Alias to help. Shows available commands.     | :heavy_check_mark: |
 | `l`         | Alias to tags. List of all tags.             | :x:                |
 | `r`         | Alias to Recents. Recently opened questions. | :x:                |
-| `o`         | Alias to open-mode. Go into open mode.       | :x:                |
+| `o`         | Alias to open-mode. Go into open mode.       | :heavy_check_mark: |
 | `quit`      | Exit the program normally.                   | :heavy_check_mark: |
 | `help`      | Shows available commands.                    | :heavy_check_mark: |
 | `clear`     | Clear output screen.                         | :heavy_check_mark: |
 | `tags`      | List of all tags.                            | :x:                |
-| `open-mode` | Go into open-mode.                           | :x:                |
+| `open-mode` | Go into open-mode.                           | :heavy_check_mark: |
