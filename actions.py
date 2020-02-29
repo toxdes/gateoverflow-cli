@@ -4,6 +4,7 @@ import constants
 
 
 def exit_program():
+    print("Okay, bye.")
     s.stop = True
 
 
