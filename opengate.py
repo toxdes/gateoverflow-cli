@@ -39,7 +39,7 @@ def main():
     print(constants.title_text)
     poll()
     # start sqlite connection
-    connection = conn('test.db')
+    connection = conn('test_database.db')
     c = connection.cursor()
     c.execute(q.create_table)
     c.execute(q.insert_dummy_values)
