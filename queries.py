@@ -1,12 +1,16 @@
 create_tables = '''
-CREATE TABLE IF NOT EXISTS recents(question_id INTEGER PRIMARY KEY, visited_count INTEGER NOT NULL DEFAULT 1, last_visited DATETIME DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS recents(
+    question_id INTEGER PRIMARY KEY, 
+    visited_count INTEGER NOT NULL DEFAULT 1, 
+    last_visited INTEGER(4) NOT NULL DEFAULT (STRFTIME('%s','now'))
+    );
 '''
 create_triggers = '''
 CREATE TRIGGER IF NOT EXISTS [update_last_visited]
 AFTER UPDATE OF visited_count
 ON recents
 BEGIN
-UPDATE recents SET last_visited = CURRENT_TIMESTAMP WHERE question_id = old.question_id;
+UPDATE recents SET last_visited = (STRFTIME('%s','now')) WHERE question_id = old.question_id;
 END
 '''
 insert_dummy_values = '''
