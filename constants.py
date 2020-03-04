@@ -15,3 +15,6 @@ DEBUG = True
 class modes():
     DEFAULT = 'default',
     OPEN_MODE = 'open-mode'
+
+
+metadata_api_base = "http://url-metadata.herokuapp.com"

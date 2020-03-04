@@ -9,6 +9,7 @@ import constants
 import actions as a
 import state as s
 from logger import d
+from helpers import crawl_for_metadata
 modes = constants.modes
 
 
@@ -66,6 +67,7 @@ def database_exists():
     return os.path.isfile(constants.database_name)
 
 
+'''
 def main():
 
     # start sqlite connection
@@ -94,6 +96,13 @@ def main():
     connection.commit()
     clean(connection)
 
+'''
 
-# call to main, start the program lol
+
+def main():
+    connection = conn(constants.database_name)
+    s.cursor = connection.cursor()
+    crawl_for_metadata()
+
+    # call to main, start the program lol
 main()
