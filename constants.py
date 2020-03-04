@@ -8,6 +8,9 @@ title_text = '''
 # TODO: what if unicodes are not supported in terminal ?
 shell_symbol = "→ "
 
+# debug-output
+DEBUG = True
+
 
 class modes():
     DEFAULT = 'default',

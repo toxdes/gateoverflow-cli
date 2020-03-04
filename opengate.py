@@ -8,6 +8,7 @@ import queries as q
 import constants
 import actions as a
 import state as s
+from logger import d
 modes = constants.modes
 
 
@@ -28,15 +29,21 @@ def poll():
     return action
 
 
-def act(action):
+def act(cmd):
     # do something based on action
-    action = action.lower()
+    action = cmd.lower().split(' ')[0]
     switcher = s.switcher
     err, all_nums = list_of_ints(action)
     if not err:
         print('Number(s) found, treating them as questionIDs, and opening each in web-browser...')
         s.questions_list = all_nums
         action = 'open'
+    if action == 'ls' or 'list':
+        if(len(cmd.split()) <= 1):
+            pass
+        else:
+            s.list_string = cmd
+
     print(f'action: {action}')
     if action not in switcher.keys():
         print("Invalid command, h to show available commands.")
@@ -63,23 +70,23 @@ def main():
 
     # start sqlite connection
     if database_exists():
-        print('database already exists.')
+        d(print, 'database already exists.')
         # print('deleting for ease of development')
         # os.system(f'rm {constants.database_name}')
     else:
-        print('fresh start, creating database.')
+        d(print, 'fresh start, creating database.')
     connection = conn(constants.database_name)
     s.cursor = connection.cursor()
     c = connection.cursor()
-    c.execute(q.create_tables)
-    c.execute(q.create_triggers)
+    c.executescript(q.create_tables)
+    c.executescript(q.create_triggers)
     # c.executescript(q.insert_dummy_values)
     # a.open_questions()
     # clear screen
-    a.clear_screen()
+    # a.clear_screen()
     s.switcher = a.get_switcher()
     for row in c.execute(q.get_all):
-        pprint(f'[test]: row is: {row}')
+        d(pprint, f'[test]: row is: {row}')
     # Display info, and take input
     print(constants.title_text)
     while(not s.stop):

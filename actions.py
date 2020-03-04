@@ -1,8 +1,8 @@
 import os
-from pprint import pprint
 import webbrowser
 import state as s
 import constants
+from logger import d
 modes = constants.modes
 
 
@@ -38,8 +38,10 @@ def open_mode():
 
 
 def debug_state():
-    print(f'mode:{s.mode}')
-    print(f'stop: {s.stop}')
+    d(print, f'mode: {s.mode}')
+    d(print, f'stop: {s.stop}')
+    d(print, f'how_many: {s.how_many}')
+    d(print, f'list_string: {s.list_string}')
 
 
 def do_nothing():
@@ -80,18 +82,63 @@ def open_questions():
         webbrowser.get().open(f'https://gateoverflow.in/{each}')
 
 
+def list_command():
+    list_options = set(['r', 'q', 't', 'recent', 'questions', 'tags'])
+    row_offset = 0
+    cmd = s.list_string.split(' ')
+    c = s.cursor
+    d(print, 'lists different things here')
+    d(print, f'probably, you wanted to list: {cmd}')
+    if len(cmd) <= 1 or cmd[1] not in list_options:
+        d(print, 'Invalid option')
+        d(print, switcher_help['ls'])
+        return
+    how_many = None
+    try:
+        how_many = cmd[2]
+    except:
+        how_many = s.how_many
+    what_to_show = cmd[1]
+    d(print, f"omg you want this? : {what_to_show}, {how_many} items")
+    table = None
+    if what_to_show in ['recent', 'r']:
+        table = 'recents'
+    elif what_to_show in ['questions', 'q']:
+        table = 'questions'
+    elif what_to_show in ['tags', 't']:
+        table = 'tags'
+    else:
+        d(print, "I shouldn't be here")
+        return
+    if table == 'recents':
+        q = f"SELECT * FROM {table} ORDER BY last_visited ASC, visited_count DESC  LIMIT {how_many} OFFSET {row_offset}"
+        res = c.execute(q, [])
+        title = 'QuestionID'.ljust(12) + 'Visited'.ljust(12) + 'Time'.ljust(12)
+        print(title)
+        for row in res:
+            row = [str(each) for each in row]
+            row_str = row[0].ljust(
+                12) + row[1].ljust(12) + row[2].ljust(12)
+            print(row_str)
+
+    else:
+        d(print, "not implemented yet.")
+
+
 # default mode switcher
 switcher = {
     '': do_nothing,
     'q': exit_program,
     'h': print_help,
     'o': open_mode,
+    'ls': list_command,
     'debug-state': debug_state,
     'quit': exit_program,
     'help': print_help,
     'clear': clear_screen,
     'open-mode': open_mode,
-    'open': open_questions
+    'open': open_questions,
+    'list': list_command
 }
 
 open_mode_switcher = {
@@ -107,12 +154,15 @@ switcher_help = {
     'q': "Alias to quit. Exit the program normally.",
     'h': "Alias to help. Shows available commands.",
     'o': "Alias to open-mode. Go into open-mode.",
+    'ls': "Alias to list. List things. Usage: ls [recents(r)(default) | tags(t) | questions(q)] [number (default:10)]",
     'quit': "Exit the program normally.",
     'help': "Shows available commands.",
     'clear': "Clear output screen.",
     'open-mode': "Go into open-mode",
-    'open': 'if a number, or multiple comma separated numbers are provided, without any command, each one will be treated as question ID, and will be opened in browser.'
+    'open': 'if a number, or multiple comma separated numbers are provided, without any command, each one will be treated as question ID, and will be opened in browser.',
+    'list': " List things. Usage: ls [recent(r) | tags(t) | questions(q)] [number]",
 }
+
 
 # possible alternative to switcher structure
 '''
