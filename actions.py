@@ -3,7 +3,7 @@ import webbrowser
 import state as s
 import constants
 from logger import d
-from helpers import readable_date
+from helpers import readable_date, open_link
 modes = constants.modes
 
 
@@ -77,10 +77,7 @@ def open_questions():
         else:
             # insert
             c.execute("INSERT INTO recents(question_id) values(?)", [each])
-        # open each link in the browser, this should be cross platform
-        # TODO: Figure out a way to suppress terminal output of browser
-        # google-chrome output is shown on the terminal for me
-        webbrowser.get().open(f'https://gateoverflow.in/{each}')
+        open_link(f'https://gateoverflow.in/{each}')
 
 
 def list_command():

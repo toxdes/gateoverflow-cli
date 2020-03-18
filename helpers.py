@@ -1,4 +1,7 @@
 from datetime import datetime
+import os
+import webbrowser
+import subprocess
 from pprint import pprint
 from dateutil.relativedelta import relativedelta
 import requests
@@ -28,6 +31,22 @@ def readable_date(date):
     else:
         res = f'{delta[i]} {order[i]} ago'
     return res
+
+# open each link in the browser, this should be cross platform
+
+
+def open_link(link):
+    # TODO: Figure out a way to suppress terminal output of browser
+    # google-chrome output is shown on the terminal
+    d(print, f'opening {link} in browser')
+    try:
+        webbrowser.get().open(f'https://gateoverflow.in/{link}')
+    except:
+        # we're on termux / there's no native browser available
+        # there's an alternative to this
+        # ask user to set $BROWSER='termux-open-url' / or do it during install?
+        subprocess.run(
+            f'termux-open-url {link}', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 # crawl metadata information
 

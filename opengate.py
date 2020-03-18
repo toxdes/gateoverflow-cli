@@ -67,7 +67,6 @@ def database_exists():
     return os.path.isfile(constants.database_name)
 
 
-'''
 def main():
 
     # start sqlite connection
@@ -96,13 +95,12 @@ def main():
     connection.commit()
     clean(connection)
 
+
 '''
-
-
 def main():
     connection = conn(constants.database_name)
     s.cursor = connection.cursor()
     crawl_for_metadata()
-
-    # call to main, start the program lol
+'''
+# call to main, start the program lol
 main()
