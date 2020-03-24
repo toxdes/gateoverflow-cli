@@ -26,23 +26,24 @@
 
 # CLI Commands
 
-| Command     | Description                                  | Status             |
-| ----------- | -------------------------------------------- | ------------------ |
-| `q`         | Alias to quit. Exit the program normally.    | :heavy_check_mark: |
-| `h`         | Alias to help. Shows available commands.     | :heavy_check_mark: |
-| `l`         | Alias to tags. List of all tags.             | :x:                |
-| `r`         | Alias to Recents. Recently opened questions. | :x:                |
-| `o`         | Alias to open-mode. Go into open mode.       | :heavy_check_mark: |
-| `quit`      | Exit the program normally.                   | :heavy_check_mark: |
-| `crawler`   | Update question data(title and description). | :heavy_check_mark: |
-| `help`      | Shows available commands.                    | :heavy_check_mark: |
-| `clear`     | Clear output screen.                         | :heavy_check_mark: |
-| `tags`      | List of all tags.                            | :x:                |
-| `open-mode` | Go into open-mode.                           | :heavy_check_mark: |
+| Command        | Description                                  | Status             |
+| -------------- | -------------------------------------------- | ------------------ |
+| `q`            | Alias to quit. Exit the program normally.    | :heavy_check_mark: |
+| `h`            | Alias to help. Shows available commands.     | :heavy_check_mark: |
+| `l`            | Alias to tags. List of all tags.             | :x:                |
+| `r`            | Alias to Recents. Recently opened questions. | :x:                |
+| `o`            | Alias to open-mode. Go into open mode.       | :heavy_check_mark: |
+| `quit`         | Exit the program normally.                   | :heavy_check_mark: |
+| `debug-toggle` | Toggle debug output.                         | :heavy_check_mark: |
+| `crawler`      | Update question data(title and description). | :heavy_check_mark: |
+| `help`         | Shows available commands.                    | :heavy_check_mark: |
+| `clear`        | Clear output screen.                         | :heavy_check_mark: |
+| `tags`         | List of all tags.                            | :x:                |
+| `open-mode`    | Go into open-mode.                           | :heavy_check_mark: |
 
 # Changelog
 
 1. Crawler routine added, can be used by `crawler` command. Stores question title, description and preview image.
-2. added `debug-toggle` command to show/hide debug output. (WIP).
+2. added `debug-toggle` command to show/hide debug output.
 3. added new dependancy of `tabulate` to pretty print tables (maybe with colors?)
 4. tags relation (WIP)

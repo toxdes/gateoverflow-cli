@@ -1,6 +1,6 @@
 import logging
 import sys
-from state import DEBUG
+import state as s
 # for later
 # logging.basicConfig(filename="debug_log.txt", level=logging.DEBUG)
 # d = logging.debug
@@ -8,7 +8,7 @@ from state import DEBUG
 
 
 def d(f, args):
-    if DEBUG == True:
+    if s.DEBUG == True:
         print('DEBUG: ', end="")
         f(args)
     else:
