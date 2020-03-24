@@ -13,3 +13,6 @@ how_many = 10
 
 # list command
 list_string = 'ls recent'
+
+# debug output
+DEBUG = False

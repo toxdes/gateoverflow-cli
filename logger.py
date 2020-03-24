@@ -1,6 +1,6 @@
 import logging
 import sys
-from constants import DEBUG
+from state import DEBUG
 # for later
 # logging.basicConfig(filename="debug_log.txt", level=logging.DEBUG)
 # d = logging.debug

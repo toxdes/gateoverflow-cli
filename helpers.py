@@ -51,13 +51,37 @@ def open_link(link):
 # crawl metadata information
 
 
-def crawl_for_metadata():
+def uncrawled_metadata_count():
     query = "SELECT COUNT(*) FROM recents WHERE metadata_scraped=0"
     c = s.cursor
     c.execute(query)
-    res = c.fetchone()[0]
-    print(f"Unscraped Records: {res}")
-    # data = get_metadata('https://gateoverflow.in/3453')
+    res = c.fetchone()
+    d(print, f'Unscraped Records: {res[0]}')
+    return int(res[0])
+
+
+def crawl_metadata():
+    query = "SELECT question_id FROM recents WHERE metadata_scraped=0"
+    c = s.cursor
+    c.execute(query)
+    res = c.fetchall()
+    stmt = ""
+    for each in res:
+        each = int(each[0])
+        data = get_metadata(f'https://gateoverflow.in/{each}')
+        if data == None:
+            continue
+        q = 'INSERT OR REPLACE INTO metadata(question_id, title, desc, image_url) values(?,?,?,?)'
+        c.execute(q, (each, data['title'],
+                      data['desc'], data['image_url']))
+        c.execute(
+            f'UPDATE recents SET metadata_scraped=1 WHERE question_id={each}')
+
+
+'''
+get_metadata(link) returns a dictionary Data
+Data{title, desc, image_url} or None on Failure
+'''
 
 
 def get_metadata(link):
@@ -71,7 +95,7 @@ def get_metadata(link):
         res = {}
         res['title'] = data['title']
         res['desc'] = data['description']
-        res['image_url'] = data['image_url']
+        res['image_url'] = data['image']
         res['title'] = data['title']
     except:
         print('maybe internet is down. Error, Skipping!')

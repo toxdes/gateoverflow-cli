@@ -9,7 +9,7 @@ import constants
 import actions as a
 import state as s
 from logger import d
-from helpers import crawl_for_metadata
+from helpers import crawl_metadata, uncrawled_metadata_count
 modes = constants.modes
 
 
@@ -100,7 +100,10 @@ def main():
 def main():
     connection = conn(constants.database_name)
     s.cursor = connection.cursor()
-    crawl_for_metadata()
+    uncrawled_metadata_count()
+    crawl_metadata()
+    connection.commit()
 '''
+
 # call to main, start the program lol
 main()

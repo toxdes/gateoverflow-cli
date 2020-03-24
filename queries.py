@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS recents(
 CREATE TABLE IF NOT EXISTS metadata(
     question_id INTEGER PRIMARY KEY,
     title VARCHAR(120) NOT NULL,
-    desc VARCHAR(20) NOT NULL,
-    image_url VARCHAR(240) NOT NULL,
+    desc VARCHAR(240) NOT NULL,
+    image_url VARCHAR(240) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS tags(
     id INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1,
@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS tags(
 
 CREATE TABLE IF NOT EXISTS tq_relation(
     id INTEGER PRIMARY KEY DEFAULT 1,
-    question_id INTEGER NOT NULL REFERENCES(recents(question_id)),
-    tag_id INTEGER NOT NULL REFERENCES(tags(id))
+    question_id INTEGER NOT NULL REFERENCES recents(question_id),
+    tag_id INTEGER NOT NULL REFERENCES tags(id)
 );
 '''
 

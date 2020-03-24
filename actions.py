@@ -3,7 +3,7 @@ import webbrowser
 import state as s
 import constants
 from logger import d
-from helpers import readable_date, open_link
+from helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata
 modes = constants.modes
 
 
@@ -38,11 +38,15 @@ def open_mode():
     s.mode = modes.OPEN_MODE
 
 
-def debug_state():
-    d(print, f'mode: {s.mode}')
-    d(print, f'stop: {s.stop}')
-    d(print, f'how_many: {s.how_many}')
-    d(print, f'list_string: {s.list_string}')
+def debug_toggle():
+    res = ''
+    if s.DEBUG == True:
+        s.DEBUG = False
+        res = 'OFF'
+    else:
+        s.DEBUG = True
+        res = 'ON'
+    print(f'debug mode is {res}')
 
 
 def do_nothing():
@@ -123,6 +127,18 @@ def list_command():
         d(print, "not implemented yet.")
 
 
+def crawler():
+    count = uncrawled_metadata_count()
+    print(f'Unscraped records: {count}')
+    q = input("Do you want to continue?(yes/no) (default: no): ")
+    if(q.lower() == 'yes' or q.lower() == 'y'):
+        # continue
+        crawl_metadata()
+    else:
+        print('Abort.')
+        return
+
+
 # default mode switcher
 switcher = {
     '': do_nothing,
@@ -130,7 +146,8 @@ switcher = {
     'h': print_help,
     'o': open_mode,
     'ls': list_command,
-    'debug-state': debug_state,
+    'crawler': crawler,
+    'debug-toggle': debug_toggle,
     'quit': exit_program,
     'help': print_help,
     'clear': clear_screen,
@@ -145,7 +162,7 @@ open_mode_switcher = {
     'h': print_help,
     'quit': exit_program,
     'help': print_help,
-    'open': open_questions
+    'open': open_questions,
 }
 # help description for each action
 switcher_help = {
@@ -156,9 +173,11 @@ switcher_help = {
     'quit': "Exit the program normally.",
     'help': "Shows available commands.",
     'clear': "Clear output screen.",
-    'open-mode': "Go into open-mode",
+    'open-mode': "Go into open-mode.",
+    'debug-toggle': "Toggle debug output.",
     'open': 'if a number, or multiple comma separated numbers are provided, without any command, each one will be treated as question ID, and will be opened in browser.',
     'list': " List things. Usage: ls [recent(r) | tags(t) | questions(q)] [number]",
+    'crawler': "Start crawling for unscraped information about recently opened questions."
 }
 
 
