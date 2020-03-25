@@ -3,7 +3,7 @@ import webbrowser
 import state as s
 import constants
 from logger import d
-from helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, print_table
+from helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table
 modes = constants.modes
 
 
@@ -28,7 +28,7 @@ def print_help():
 def clear_screen():
     cmd = 'clear' if os.name == 'posix' else 'cls'
     os.system(cmd)
-    print(constants.title_text)
+    print(s.title_text)
 
 
 def open_mode():
@@ -123,7 +123,7 @@ def list_command():
         for row in res:
             row = [str(each) for each in row]
             data.append([row[0], row[1], readable_date(row[2])])
-        print_table(data, headers)
+        print(prettify_table(data, headers))
     else:
         d(print, "not implemented yet.")
 

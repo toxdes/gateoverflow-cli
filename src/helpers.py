@@ -117,6 +117,6 @@ def get_metadata(link):
 # pretty tables
 
 
-def print_table(data, headers):
-    print(tabulate(data, headers=headers, tablefmt='fancy_grid',
-                   numalign='center', stralign='center'))
+def prettify_table(data, headers):
+    return str(tabulate(data, headers=headers, tablefmt='fancy_grid',
+                        numalign='center', stralign='center'))

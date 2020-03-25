@@ -9,7 +9,7 @@ import constants
 import actions as a
 import state as s
 from logger import d
-from helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints
+from helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints, prettify_table
 modes = constants.modes
 
 
@@ -24,7 +24,7 @@ def clean(con):
 def poll():
     symbol = constants.shell_symbol
     if s.mode != modes.DEFAULT:
-        prefix = f'[{s.mode}]'
+        prefix = f'{prefix}[{s.mode}]'
         symbol = f'{prefix}{symbol}'
     action = input(symbol)
     return action
@@ -79,7 +79,7 @@ def main():
     for row in c.execute(q.get_all):
         d(pprint, f'[test]: row is: {row}')
     # Display info, and take input
-    print(constants.title_text)
+    print(s.title_text)
     while(not s.stop):
         act(poll())
     connection.commit()

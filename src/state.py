@@ -1,6 +1,7 @@
 # global variables
 # controls polling, setting to true exits the program
 import constants
+from helpers import prettify_table
 stop = False
 mode = constants.modes.DEFAULT
 switcher = None
@@ -16,3 +17,6 @@ list_string = 'ls recent'
 
 # debug output
 DEBUG = False
+
+# title
+title_text = prettify_table([['Gateoverflow'.upper()]], [])
