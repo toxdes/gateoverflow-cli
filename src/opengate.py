@@ -9,7 +9,7 @@ import constants
 import actions as a
 import state as s
 from logger import d
-from helpers import crawl_metadata, uncrawled_metadata_count
+from helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints
 modes = constants.modes
 
 
@@ -51,16 +51,6 @@ def act(cmd):
         return
     f = switcher[action]
     f()
-
-
-def list_of_ints(in_str):
-    error = False
-    nums = []
-    try:
-        nums = [int(a) for a in in_str.split(',')]
-    except:
-        error = True
-    return (error, nums)
 
 
 def database_exists():

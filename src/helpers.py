@@ -32,6 +32,17 @@ def readable_date(date):
         res = f'{delta[i]} {order[i]} ago'
     return res
 
+# checks if string is list of comma seperated integers only
+
+
+def list_of_ints(in_str):
+    error = False
+    nums = []
+    try:
+        nums = [int(a) for a in in_str.split(',')]
+    except:
+        error = True
+    return (error, nums)
 # open each link in the browser, this should be cross platform
 
 
