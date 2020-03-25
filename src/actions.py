@@ -3,7 +3,7 @@ import webbrowser
 import state as s
 import constants
 from logger import d
-from helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata
+from helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, print_table
 modes = constants.modes
 
 
@@ -114,15 +114,16 @@ def list_command():
         return
     if table == 'recents':
         q = f"SELECT question_id, visited_count, last_visited FROM {table} ORDER BY last_visited ASC, visited_count DESC  LIMIT {how_many} OFFSET {row_offset}"
-        res = c.execute(q, [])
-        title = 'QuestionID'.ljust(12) + 'Visited'.ljust(12) + 'Time'.ljust(12)
-        print(title)
+        c.execute(q, [])
+        res = c.fetchall()
+        # title = 'QuestionID'.ljust(12) + 'Visited'.ljust(12) + 'Time'.ljust(12)
+        # print(title)
+        headers = ['Question ID', 'Visited', 'Time']
+        data = []
         for row in res:
             row = [str(each) for each in row]
-            row_str = row[0].ljust(
-                12) + row[1].ljust(12) + readable_date(row[2]).ljust(12)
-            print(row_str)
-
+            data.append([row[0], row[1], readable_date(row[2])])
+        print_table(data, headers)
     else:
         d(print, "not implemented yet.")
 

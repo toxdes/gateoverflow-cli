@@ -1,4 +1,5 @@
 from datetime import datetime
+from tabulate import tabulate
 import os
 import webbrowser
 import subprocess
@@ -112,3 +113,10 @@ def get_metadata(link):
         print('maybe internet is down. Error, Skipping!')
         res = None
     return res
+
+# pretty tables
+
+
+def print_table(data, headers):
+    print(tabulate(data, headers=headers, tablefmt='fancy_grid',
+                   numalign='center', stralign='center'))
