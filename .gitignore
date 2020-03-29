@@ -1,0 +1,6 @@
+.vscode
+__pycache__
+test_database.*
+debug_log.txt
+src/temp.py
+venv
