@@ -9,7 +9,7 @@ import constants
 import actions as a
 import state as s
 from logger import d
-from helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints, prettify_table
+from helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints, prettify_table, print_logo
 modes = constants.modes
 
 
@@ -79,7 +79,7 @@ def main():
     for row in c.execute(q.get_all):
         d(pprint, f'[test]: row is: {row}')
     # Display info, and take input
-    print(s.title_text)
+    a.clear_screen()
     while(not s.stop):
         act(poll())
     connection.commit()
@@ -96,4 +96,8 @@ def main():
 '''
 
 # call to main, start the program lol
-main()
+try:
+    main()
+except:
+    print("\nI think I'm the one who says sorry here.")
+    a.exit_program()

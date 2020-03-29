@@ -120,3 +120,7 @@ def get_metadata(link):
 def prettify_table(data, headers):
     return str(tabulate(data, headers=headers, tablefmt='fancy_grid',
                         numalign='center', stralign='center'))
+
+
+def print_logo():
+    print(f'{constants.colors.GREEN}{constants.colors.BOLD}{s.title_text}{constants.colors.END}{constants.colors.END}')
