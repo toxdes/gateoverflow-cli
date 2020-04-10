@@ -4,3 +4,6 @@ test_database.*
 debug_log.txt
 gateoverflow/temp.py
 venv
+build
+dist
+gateoverflow.egg-info
