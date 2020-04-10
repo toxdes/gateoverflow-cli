@@ -7,6 +7,16 @@
 - dateutil
 - tabulate
 
+# Changelog
+
+### v0.0.2
+
+1. super early release, stuff is broken, trying out `pip`.
+2. basic things work, tags are broken
+3. still figuring out stuff
+
+Read [full changelog](./changelog.md)
+
 # Todo
 
 - Create a CLI that opens a link in the browser, when question id is provided.
@@ -41,10 +51,3 @@
 | `clear`        | Clear output screen.                                                     | :heavy_check_mark: |
 | `list`         | List things. Usage: `ls [recent(r) | tags(t) | questions(q)] [how_many]` | :x:                |
 | `open-mode`    | Go into open-mode.                                                       | :heavy_check_mark: |
-
-# Changelog
-
-1. Crawler routine added, can be used by `crawler` command. Stores question title, description and preview image.
-2. added `debug-toggle` command to show/hide debug output.
-3. added new dependancy of `tabulate` to pretty print tables (maybe with colors?)
-4. tags relation (WIP)
