@@ -2,5 +2,5 @@
 __pycache__
 test_database.*
 debug_log.txt
-src/temp.py
+gateoverflow/temp.py
 venv

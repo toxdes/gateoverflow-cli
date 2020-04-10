@@ -2,9 +2,9 @@
 # this is fine until I find something else
 # also maybe I should use docker
 default:
-	python3 -m src
+	python3 -m gateoverflow
 t:
-	python3 ./src/temp.py
+	python3 ./gateoverflow/temp.py
 clean:
 	rm -rf __pycache__
-	rm -rf src/__pycache__
+	rm -rf gateoverflow/__pycache__

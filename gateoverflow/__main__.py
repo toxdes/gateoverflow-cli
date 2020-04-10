@@ -1,4 +1,4 @@
-from src import opengate, actions
+from gateoverflow import opengate, actions
 
 if __name__ == "__main__":
     try:

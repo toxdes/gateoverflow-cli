@@ -7,9 +7,9 @@ from pprint import pprint
 from dateutil.relativedelta import relativedelta
 import requests
 import json
-from src.logger import d
-from src import constants
-from src import state as s
+from gateoverflow.logger import d
+from gateoverflow import constants
+from gateoverflow import state as s
 
 # TODO: oh poor me, please update this function later for avoiding embarrassement
 
