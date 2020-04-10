@@ -2,7 +2,7 @@
 # this is fine until I find something else
 # also maybe I should use docker
 default:
-	python3 ./src/opengate.py
+	python3 -m src
 t:
 	python3 ./src/temp.py
 clean:

@@ -1,6 +1,6 @@
-import logging
 import sys
-import state as s
+import logging
+from src import state as s
 # for later
 # logging.basicConfig(filename="debug_log.txt", level=logging.DEBUG)
 # d = logging.debug

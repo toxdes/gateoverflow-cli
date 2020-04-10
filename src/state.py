@@ -1,7 +1,7 @@
 # global variables
 # controls polling, setting to true exits the program
-import constants
-from helpers import prettify_table
+from src import constants
+from src.helpers import prettify_table
 stop = False
 mode = constants.modes.DEFAULT
 switcher = None

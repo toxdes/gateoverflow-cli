@@ -1,9 +1,9 @@
 import os
 import webbrowser
-import state as s
-import constants
-from logger import d
-from helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_logo
+from src import state as s
+from src import constants
+from src.logger import d
+from src.helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_logo
 modes = constants.modes
 
 

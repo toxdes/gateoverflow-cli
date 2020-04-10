@@ -4,12 +4,12 @@ from pprint import pprint
 import os
 import random as r
 # local imports
-import queries as q
-import constants
-import actions as a
-import state as s
-from logger import d
-from helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints, prettify_table, print_logo
+from src import queries as q
+from src import constants
+from src import actions as a
+from src import state as s
+from src.logger import d
+from src.helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints, prettify_table, print_logo
 modes = constants.modes
 
 

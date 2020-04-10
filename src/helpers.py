@@ -7,9 +7,9 @@ from pprint import pprint
 from dateutil.relativedelta import relativedelta
 import requests
 import json
-from logger import d
-import constants
-import state as s
+from src.logger import d
+from src import constants
+from src import state as s
 
 # TODO: oh poor me, please update this function later for avoiding embarrassement
 
@@ -60,7 +60,7 @@ def open_link(link):
         subprocess.run(
             f'termux-open-url {link}', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-# crawl metadata information
+# crawl metadata information, will be useful later
 
 
 def uncrawled_metadata_count():
