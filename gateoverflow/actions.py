@@ -1,5 +1,4 @@
 import os
-import webbrowser
 from gateoverflow import state as s
 from gateoverflow import constants
 from gateoverflow.logger import d
@@ -82,6 +81,7 @@ def open_questions():
             # insert
             c.execute("INSERT INTO recents(question_id) values(?)", [each])
         open_link(f'https://gateoverflow.in/{each}')
+    print('Done!')
 
 
 def list_command():

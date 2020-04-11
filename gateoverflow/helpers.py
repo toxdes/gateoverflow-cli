@@ -1,7 +1,7 @@
 from datetime import datetime
+import shlex
 from tabulate import tabulate
 import os
-import webbrowser
 import subprocess
 from pprint import pprint
 from dateutil.relativedelta import relativedelta
@@ -52,13 +52,15 @@ def open_link(link):
     # google-chrome output is shown on the terminal
     d(print, f'opening {link} in browser')
     try:
-        webbrowser.get().open(f'https://gateoverflow.in/{link}')
+        # webbrowser.get().open(link)
+        subprocess.run(shlex.split(
+            f'xdg-open {link}'), stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     except:
         # we're on termux / there's no native browser available
         # there's an alternative to this
         # ask user to set $BROWSER='termux-open-url' / or do it during install?
         subprocess.run(
-            f'termux-open-url {link}', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            shlex.split(f'termux-open-url {link}'), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 # crawl metadata information, will be useful later
 
