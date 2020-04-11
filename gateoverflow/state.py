@@ -13,7 +13,7 @@ cursor = None
 how_many = 10
 
 # list command
-list_string = 'ls recent'
+list_string = 'ls'
 
 # debug output
 DEBUG = False

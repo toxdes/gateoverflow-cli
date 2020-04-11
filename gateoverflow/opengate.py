@@ -39,11 +39,11 @@ def act(cmd):
         print('Number(s) found, treating them as questionIDs, and opening each in web-browser...')
         s.questions_list = all_nums
         action = 'open'
-    if action == 'ls' or 'list':
-        if(len(cmd.split()) <= 1):
-            pass
-        else:
+    if action == 'ls':
+        if(len(cmd.split(' ')) > 1):
             s.list_string = cmd
+        else:
+            s.list_string = f'ls {s.how_many}'
 
     print(f'action: {action}')
     if action not in switcher.keys():
@@ -96,8 +96,8 @@ def main():
 '''
 
 # call to main, start the program lol
-try:
-    main()
-except:
-    print("\nI think I'm the one who says sorry here.")
-    a.exit_program()
+# try:
+#     main()
+# except:
+#     print("\nI think I'm the one who says sorry here.")
+#     a.exit_program()
