@@ -9,11 +9,11 @@
 
 # Changelog
 
-### v0.0.2
+### v0.2.0
 
-1. super early release, stuff is broken, trying out `pip`.
-2. basic things work, tags are broken
-3. still figuring out stuff
+1. updated makefile to have a `build` target
+2. changed behaviour of `ls` command. Now it only lists recents
+3. refactor, and removing unnecessary code
 
 Read [full changelog](./changelog.md)
 

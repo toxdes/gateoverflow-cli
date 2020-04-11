@@ -1,5 +1,15 @@
 # Changelog
 
+### v0.2.0
+
+1. updated makefile to have a `build` target
+2. changed behaviour of `ls` command. Now it only lists recents
+3. refactor, and removing unnecessary code
+
+### v0.0.3, v0.0.4
+
+1. testing and figuring out pypi dependencies, works from scratch on `termux` so far.
+
 ### v0.0.2
 
 1. super early release, stuff is broken, trying out `pip`.
