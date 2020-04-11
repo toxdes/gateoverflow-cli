@@ -37,17 +37,13 @@ Read [full changelog](./changelog.md)
 
 # CLI Commands
 
-| Command        | Description                                                          | Status             |
-| -------------- | -------------------------------------------------------------------- | ------------------ |
-| `q`            | Alias to quit. Exit the program normally.                            | :heavy_check_mark: |
-| `h`            | Alias to help. Shows available commands.                             | :heavy_check_mark: |
-| `ls`           | Alias to list.                                                       | :x:                |
-| `r`            | Alias to Recents. Recently opened questions.                         | :x:                |
-| `o`            | Alias to open-mode. Go into open mode.                               | :heavy_check_mark: |
-| `quit`         | Exit the program normally.                                           | :heavy_check_mark: |
-| `debug-toggle` | Toggle debug output.                                                 | :heavy_check_mark: |
-| `crawler`      | Update question data(title and description).                         | :heavy_check_mark: |
-| `help`         | Shows available commands.                                            | :heavy_check_mark: |
-| `clear`        | Clear output screen.                                                 | :heavy_check_mark: |
-| `list`         | List things. Usage: `ls [recent(r),tags(t),questions(q)] [how_many]` | :x:                |
-| `open-mode`    | Go into open-mode.                                                   | :heavy_check_mark: |
+| Command        | Description                                  | Status             |
+| -------------- | -------------------------------------------- | ------------------ |
+| `q`            | Alias to quit. Exit the program normally.    | :heavy_check_mark: |
+| `h`            | Alias to help. Shows available commands.     | :heavy_check_mark: |
+| `ls`           | Alias to list.                               | :x:                |
+| `quit`         | Exit the program normally.                   | :heavy_check_mark: |
+| `debug-toggle` | Toggle debug output.                         | :heavy_check_mark: |
+| `crawler`      | Update question data(title and description). | :heavy_check_mark: |
+| `help`         | Shows available commands.                    | :heavy_check_mark: |
+| `clear`        | Clear output screen.                         | :heavy_check_mark: |
