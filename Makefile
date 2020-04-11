@@ -5,6 +5,13 @@ default:
 	python3 -m gateoverflow
 t:
 	python3 ./gateoverflow/temp.py
+build: clean
+	python3 setup.py sdist bdist_wheel
+	python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
 clean:
 	rm -rf __pycache__
 	rm -rf gateoverflow/__pycache__
+	rm -rf build dist
+
+
