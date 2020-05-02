@@ -1,8 +1,11 @@
 from gateoverflow import opengate, actions
-
+import gateoverflow.state as s
 if __name__ == "__main__":
-    try:
+    if s.DEBUG == True:
         opengate.main()
-    except:
-        print('I am the one who gets to say sorry here.')
-        actions.exit_program()
+    else:
+        try:
+            opengate.main()
+        except:
+            print('I am the one who gets to say sorry here.')
+            actions.exit_program()

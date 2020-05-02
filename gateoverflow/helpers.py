@@ -54,7 +54,7 @@ def list_of_ints_and_tags(in_str):
     nums = []
     tags = []
     line = [a.strip() for a in in_str.split(',')]
-    print(line)
+    d(print, line)
     for each in line:
         try:
             int(each)

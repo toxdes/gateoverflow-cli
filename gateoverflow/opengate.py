@@ -23,6 +23,9 @@ def clean(con):
 
 def poll():
     symbol = constants.shell_symbol
+    prefix = ''
+    if s.DEBUG == True:
+        prefix = f'[debug-mode]'
     if s.mode != modes.DEFAULT:
         prefix = f'{prefix}[{s.mode}]'
         symbol = f'{prefix}{symbol}'
@@ -52,7 +55,7 @@ def act(cmd):
         else:
             s.list_string = f'ls {s.how_many}'
 
-    print(f'action: {action}')
+    d(print, f'action: {action}')
     if action not in switcher.keys():
         print("Invalid command, h to show available commands.")
         return
