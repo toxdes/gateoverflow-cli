@@ -2,6 +2,7 @@
 __pycache__
 test_database.*
 debug_log.txt
+pypi-token
 gateoverflow/temp.py
 venv
 build

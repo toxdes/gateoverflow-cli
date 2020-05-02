@@ -3,9 +3,15 @@
 # also maybe I should use docker
 default:
 	python3 -m gateoverflow
+
 t:
 	python3 ./gateoverflow/temp.py
+
 build: clean
+	python3 setup.py sdist bdist_wheel
+	python3 -m twine upload dist/*
+
+build-test: clean
 	python3 setup.py sdist bdist_wheel
 	python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
