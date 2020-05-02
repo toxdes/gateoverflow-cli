@@ -3,7 +3,9 @@
 # also maybe I should use docker
 default:
 	python3 -m gateoverflow -d
-
+r:
+# for testing release
+	python3 -m gateoverflow
 t:
 	python3 ./gateoverflow/temp.py
 
