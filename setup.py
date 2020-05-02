@@ -5,16 +5,21 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="gateoverflow",  # Replace with your own username
-    version="0.2.0",
+    version="0.3.0",
     author="Vaibhav Mali",
     author_email="malivp3494@gmail.com",
-    description="A command line interface for gate links",
+    description="A command line interface for gateoverflow links",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/toxdes/opengate",
     install_requires=['tabulate',
                       'python-dateutil', 'requests'],
     packages=setuptools.find_packages(),
+    entry_points={
+        "console_scripts": [
+            "gateoverflow=gateoverflow.opengate:start",
+        ]
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

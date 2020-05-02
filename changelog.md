@@ -1,5 +1,13 @@
 # Changelog
 
+### v0.3.0
+1. Experimenting with `pip` to make a runnable CLI tool. Prior to this, it would require to be run via `pip -m gateoverflow`. 
+2. Orgainzed README.
+3. Parser barely works, as specified in [Parser Commands](./README.md#usage) 
+4. Major refactor, queries and debug-outputs.
+5. debug mode improved.
+
+
 ### v0.2.0
 
 1. updated makefile to have a `build` target
