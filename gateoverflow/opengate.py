@@ -9,7 +9,7 @@ from gateoverflow import constants
 from gateoverflow import actions as a
 from gateoverflow import state as s
 from gateoverflow.logger import d
-from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints, prettify_table, print_logo
+from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints, list_of_ints_and_tags, prettify_table, print_logo
 modes = constants.modes
 
 
@@ -34,11 +34,18 @@ def act(cmd):
     # do something based on action
     action = cmd.lower().split(' ')[0]
     switcher = s.switcher
-    err, all_nums = list_of_ints(action)
+    err, all_nums = list_of_ints(cmd)
     if not err:
         print('Number(s) found, treating them as questionIDs, and opening each in web-browser...')
         s.questions_list = all_nums
         action = 'open'
+    else:
+        err, questions, tags = list_of_ints_and_tags(cmd)
+        if not err:
+            print('Pattern found, you wanted to add questions to tags right?')
+            action = 'add_q_to_tags'
+            s.questions_list = questions
+            s.tags = tags
     if action == 'ls':
         if(len(cmd.split(' ')) > 1):
             s.list_string = cmd

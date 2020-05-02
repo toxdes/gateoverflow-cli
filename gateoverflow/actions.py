@@ -115,6 +115,12 @@ def crawler():
         return
 
 
+def add_questions_to_tags():
+    print('Add questions to tags')
+    print(f'tags: {s.tags}')
+    print(f'questions: {s.questions_list}')
+
+
 # default mode switcher
 switcher = {
     '': do_nothing,
@@ -127,12 +133,15 @@ switcher = {
     'help': print_help,
     'clear': clear_screen,
     'open': open_questions,
+    'add_q_to_tags': add_questions_to_tags
 }
 
 # help description for each action
 switcher_help = {
     'q': "Alias to quit. Exit the program normally.",
     'h': "Alias to help. Shows available commands.",
+    '#': "Alias to tags. Lists tags.",
+    'tags': "List tags.",
     'open': 'if a number, or multiple comma separated numbers are provided, without any command, each one will be treated as question ID, and will be opened in browser.',
     'ls': "List recently opened links.",
     'quit': "Exit the program normally.",

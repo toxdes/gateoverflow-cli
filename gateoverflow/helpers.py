@@ -44,6 +44,31 @@ def list_of_ints(in_str):
     except:
         error = True
     return (error, nums)
+
+# checks if string is list of comma seperated ints and includes tags
+# for example 23,42,12, #important, #wrong -> valid
+
+
+def list_of_ints_and_tags(in_str):
+    error = False
+    nums = []
+    tags = []
+    line = [a.strip() for a in in_str.split(',')]
+    print(line)
+    for each in line:
+        try:
+            int(each)
+            nums.append(each)
+        except:
+            if(each[0] == '#'):
+                if(len(each.split(' ')) > 1):
+                    [tags.append(a) for a in each.split(' ')]
+                else:
+                    tags.append(each)
+            else:
+                error = True
+                break
+    return (error, nums, tags)
 # open each link in the browser, this should be cross platform
 
 
