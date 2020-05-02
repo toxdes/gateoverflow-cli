@@ -1,3 +1,5 @@
+# Most static queries are listed here, yet there are a few cases where it's kinda easier if they are generated dynamically
+
 create_tables = '''
 CREATE TABLE IF NOT EXISTS recents(
     question_id INTEGER PRIMARY KEY, 
@@ -29,8 +31,16 @@ CREATE TRIGGER IF NOT EXISTS [update_last_visited]
 AFTER UPDATE OF visited_count
 ON recents
 BEGIN
-UPDATE recents SET last_visited = (STRFTIME('%s','now')) WHERE question_id = old.question_id;
+UPDATE recents SET last_visited =(STRFTIME('%s','now')) WHERE question_id = old.question_id;
 END
+'''
+create_default_tags = '''
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (1,'important',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=1)); 
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (2,'tricky',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=2)); 
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (3,'read-later',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=3)); 
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (4,'super-important',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=4)); 
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (5,'wrongly-attempted',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=5)); 
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (6,'easy',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=6)); 
 '''
 insert_dummy_values = '''
     INSERT or REPLACE INTO recents(question_id, visited_count) VALUES (22, 12);
@@ -59,3 +69,5 @@ update_visited_count = "UPDATE recents SET visited_count=(SELECT visited_count F
 get_question = "SELECT * FROM recents WHERE question_id=?"
 insert_into_recents = "INSERT INTO recents(question_id) values(?)"
 get_recent = "SELECT question_id, visited_count, last_visited FROM recents ORDER BY last_visited DESC, visited_count DESC  LIMIT ? OFFSET ?"
+
+get_tags = "SELECT name, questions_count FROM tags ORDER BY questions_count DESC;"

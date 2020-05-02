@@ -36,31 +36,43 @@ def readable_date(date):
 # checks if string is list of comma seperated integers only
 
 
-def list_of_ints(in_str):
-    error = False
-    nums = []
-    try:
-        nums = [int(a) for a in in_str.split(',')]
-    except:
-        error = True
-    return (error, nums)
+# def list_of_ints(in_str):
+#     error = False
+#     nums = []
+#     try:
+#         nums = [int(a) for a in in_str.split(',')]
+#     except:
+#         error = True
+#     error = True
+#     return (error, nums)
 
 # checks if string is list of comma seperated ints and includes tags
 # for example 23,42,12, #important, #wrong -> valid
 
 
-def list_of_ints_and_tags(in_str):
+def parse_cmd(in_str):
     error = False
     nums = []
     tags = []
+    action = None
+    if(in_str == 'tags' or in_str == '#'):
+        action = constants.parser_actions.LIST_TAGS
+        return (error, nums, tags, action)
     line = [a.strip() for a in in_str.split(',')]
     d(print, line)
     for each in line:
         try:
-            int(each)
-            nums.append(each)
+            if(len(each.split(' ')) > 1):
+                [nums.append(int(a)) for a in each.split(' ')]
+            else:
+                nums.append(int(each))
         except:
-            if(each[0] == '#'):
+            # fixes trailing commas and inputs like `,,,` `#,#,#`
+            # TODO: fix `#,3`
+            if(len(each) < 1 or each == '#'):
+                continue
+            # if multiple #'s are there, then it should be invalid
+            if(each[0] == '#' and each.count('#') == 1):
                 if(len(each.split(' ')) > 1):
                     [tags.append(a) for a in each.split(' ')]
                 else:
@@ -68,7 +80,18 @@ def list_of_ints_and_tags(in_str):
             else:
                 error = True
                 break
-    return (error, nums, tags)
+    if error:
+        return (error, nums, tags, action)
+    if(len(nums) == 0):
+        action = constants.parser_actions.LIST_QUESTIONS_OF_TAGS
+    if(len(tags) == 0):
+        action = constants.parser_actions.OPEN_QUESTIONS
+    d(print, f'error: {error}')
+    d(print, f'nums: {nums}')
+    d(print, f'tags: {tags}')
+    if action == None:
+        action = constants.parser_actions.ADD_QUESTIONS_TO_TAGS
+    return (error, nums, tags, action)
 # open each link in the browser, this should be cross platform
 
 

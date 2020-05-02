@@ -10,7 +10,7 @@ from gateoverflow import constants
 from gateoverflow import actions as a
 from gateoverflow import state as s
 from gateoverflow.logger import d
-from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, list_of_ints, list_of_ints_and_tags, prettify_table, print_logo
+from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_logo
 modes = constants.modes
 
 
@@ -38,18 +38,13 @@ def act(cmd):
     # do something based on action
     action = cmd.lower().split(' ')[0]
     switcher = s.switcher
-    err, all_nums = list_of_ints(cmd)
+    err, questions, tags, parser_action = parse_cmd(cmd)
     if not err:
-        print('Number(s) found, treating them as questionIDs, and opening each in web-browser...')
-        s.questions_list = all_nums
-        action = 'open'
-    else:
-        err, questions, tags = list_of_ints_and_tags(cmd)
-        if not err:
-            print('Pattern found, you wanted to add questions to tags right?')
-            action = 'add_q_to_tags'
-            s.questions_list = questions
-            s.tags = tags
+        s.questions_list = questions
+        s.tags = tags
+        s.parser_action = parser_action
+        action = 'parser'
+
     if action == 'ls':
         if(len(cmd.split(' ')) > 1):
             s.list_string = cmd
@@ -58,8 +53,7 @@ def act(cmd):
 
     d(print, f'action: {action}')
     if action not in switcher.keys():
-        print("Invalid command, h to show available commands.")
-        return
+        action = 'invalid'
     f = switcher[action]
     f()
 
@@ -82,6 +76,7 @@ def main():
     c = connection.cursor()
     c.executescript(q.create_tables)
     c.executescript(q.create_triggers)
+    c.executescript(q.create_default_tags)
     # c.executescript(q.insert_dummy_values)
     # a.open_questions()
     # clear screen
