@@ -77,6 +77,7 @@ def main():
     else:
         d(print, 'fresh start, creating database.')
     connection = conn(constants.database_name)
+    s.conn = connection
     s.cursor = connection.cursor()
     c = connection.cursor()
     c.executescript(q.create_tables)

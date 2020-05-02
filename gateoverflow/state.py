@@ -9,7 +9,7 @@ switcher = None
 questions_list = []
 tags = []
 cursor = None
-
+conn = None
 # when listing things, how many records to show, defaults to 10
 how_many = 10
 

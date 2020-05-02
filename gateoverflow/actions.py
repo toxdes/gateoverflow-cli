@@ -70,6 +70,7 @@ def open_questions():
             # insert
             c.execute(q.insert_into_recents, [each])
         open_link(f'https://gateoverflow.in/{each}')
+    s.conn.commit()
     print('Done!')
 
 
