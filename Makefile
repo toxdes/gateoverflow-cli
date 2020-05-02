@@ -2,7 +2,7 @@
 # this is fine until I find something else
 # also maybe I should use docker
 default:
-	python3 -m gateoverflow
+	python3 -m gateoverflow -d
 
 t:
 	python3 ./gateoverflow/temp.py

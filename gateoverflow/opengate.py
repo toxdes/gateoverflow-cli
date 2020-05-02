@@ -2,6 +2,7 @@
 import sqlite3
 from pprint import pprint
 import os
+import sys
 import random as r
 # local imports
 from gateoverflow import queries as q
@@ -68,7 +69,6 @@ def database_exists():
 
 
 def main():
-
     # start sqlite connection
     if database_exists():
         d(print, 'database already exists.')
@@ -95,6 +95,23 @@ def main():
         act(poll())
     connection.commit()
     clean(connection)
+
+
+def start():
+    # for starting cli with debug = true by passing -d or --debug
+    if(len(sys.argv) >= 2):
+        for each in sys.argv:
+            if(each == '-d' or each == '--debug'):
+                s.DEBUG = True
+                break
+    if s.DEBUG == True:
+        main()
+    else:
+        try:
+            main()
+        except:
+            print('I am the one who gets to say sorry here.')
+            a.exit_program()
 
 
 '''
