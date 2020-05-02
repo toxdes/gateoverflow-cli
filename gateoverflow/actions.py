@@ -2,6 +2,7 @@ import os
 from gateoverflow import state as s
 from gateoverflow import constants
 from gateoverflow.logger import d
+from gateoverflow import queries as q
 from gateoverflow.helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_logo
 modes = constants.modes
 
@@ -59,15 +60,15 @@ def open_questions():
     c = s.cursor
     for each in question_ids:
         # check if already exists
-        c.execute("SELECT * FROM recents WHERE question_id=?", [each])
+        c.execute(q.get_question, [each])
         res = c.fetchone()
         if res != None:
             # update
-            c.execute("UPDATE recents SET visited_count=(SELECT visited_count FROM recents WHERE question_id=?)+1  where question_id=?", [
+            c.execute(q.update_visited_count, [
                       each, each])
         else:
             # insert
-            c.execute("INSERT INTO recents(question_id) values(?)", [each])
+            c.execute(q.insert_into_recents, [each])
         open_link(f'https://gateoverflow.in/{each}')
     print('Done!')
 
@@ -90,8 +91,7 @@ def list_command():
         how_many = s.how_many  # default show only 10 records?
     # what_to_show = cmd[1]
     d(print, f"omg you want this? : recents, {how_many} items")
-    q = f"SELECT question_id, visited_count, last_visited FROM recents ORDER BY last_visited ASC, visited_count DESC  LIMIT {how_many} OFFSET {row_offset}"
-    c.execute(q)
+    c.execute(q.get_recent, (how_many, row_offset))
     res = c.fetchall()
     # title = 'QuestionID'.ljust(12) + 'Visited'.ljust(12) + 'Time'.ljust(12)
     # print(title)
@@ -116,9 +116,10 @@ def crawler():
 
 
 def add_questions_to_tags():
-    print('Add questions to tags')
-    print(f'tags: {s.tags}')
-    print(f'questions: {s.questions_list}')
+    # print('Add questions to tags')
+    # print(f'tags: {s.tags}')
+    # print(f'questions: {s.questions_list}')
+    pass
 
 
 # default mode switcher

@@ -49,3 +49,13 @@ insert_dummy_values = '''
     '''
 
 get_all = "SELECT * from recents;"
+uncrawled_metadata_count = "SELECT COUNT(*) FROM recents WHERE metadata_scraped=0"
+get_unscraped_question_ids = "SELECT question_id FROM recents WHERE metadata_scraped=0"
+insert_into_metadata = 'INSERT OR REPLACE INTO metadata(question_id, title, desc, image_url) values(?,?,?,?)'
+update_metadata_scraped_questions = 'UPDATE recents SET metadata_scraped=1 WHERE question_id=?'
+
+
+update_visited_count = "UPDATE recents SET visited_count=(SELECT visited_count FROM recents WHERE question_id=?)+1  where question_id=?"
+get_question = "SELECT * FROM recents WHERE question_id=?"
+insert_into_recents = "INSERT INTO recents(question_id) values(?)"
+get_recent = "SELECT question_id, visited_count, last_visited FROM recents ORDER BY last_visited DESC, visited_count DESC  LIMIT ? OFFSET ?"

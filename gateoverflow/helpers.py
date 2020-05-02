@@ -10,7 +10,7 @@ import json
 from gateoverflow.logger import d
 from gateoverflow import constants
 from gateoverflow import state as s
-
+from gateoverflow import queries as q
 # TODO: oh poor me, please update this function later for avoiding embarrassement
 
 
@@ -91,18 +91,16 @@ def open_link(link):
 
 
 def uncrawled_metadata_count():
-    query = "SELECT COUNT(*) FROM recents WHERE metadata_scraped=0"
     c = s.cursor
-    c.execute(query)
+    c.execute(q.uncrawled_metadata_count)
     res = c.fetchone()
     d(print, f'Unscraped Records: {res[0]}')
     return int(res[0])
 
 
 def crawl_metadata():
-    query = "SELECT question_id FROM recents WHERE metadata_scraped=0"
     c = s.cursor
-    c.execute(query)
+    c.execute(q.get_unscraped_question_ids)
     res = c.fetchall()
     stmt = ""
     for each in res:
@@ -110,11 +108,10 @@ def crawl_metadata():
         data = get_metadata(f'https://gateoverflow.in/{each}')
         if data == None:
             continue
-        q = 'INSERT OR REPLACE INTO metadata(question_id, title, desc, image_url) values(?,?,?,?)'
-        c.execute(q, (each, data['title'],
-                      data['desc'], data['image_url']))
+        c.execute(q.insert_into_metadata, (each, data['title'],
+                                           data['desc'], data['image_url']))
         c.execute(
-            f'UPDATE recents SET metadata_scraped=1 WHERE question_id={each}')
+            q.update_metadata_scraped_questions, (each))
 
 
 '''

@@ -28,7 +28,7 @@ def poll():
         prefix = f'[debug-mode]'
     if s.mode != modes.DEFAULT:
         prefix = f'{prefix}[{s.mode}]'
-        symbol = f'{prefix}{symbol}'
+    symbol = f'{prefix}{symbol}'
     action = input(symbol)
     return action
 
