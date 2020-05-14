@@ -14,7 +14,7 @@ build: clean git
 	python3 -m twine upload dist/*
 
 git:
-	git push origin master
+	git push origin master develop
 
 build-test: clean
 	python3 setup.py sdist bdist_wheel
