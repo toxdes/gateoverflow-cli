@@ -75,6 +75,10 @@ def main():
     s.cursor = connection.cursor()
     c = connection.cursor()
     c.executescript(q.create_tables)
+    try:
+        c.executescript(q.alter_tables)
+    except:
+        d(print, "No need to alter tables.")
     c.executescript(q.create_triggers)
     c.executescript(q.create_default_tags)
     # c.executescript(q.insert_dummy_values)

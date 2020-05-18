@@ -27,6 +27,10 @@ CREATE TABLE IF NOT EXISTS tq_relation(
 );
 '''
 
+# TODO: Find a better way to change existing database-structure on the fly, like adding a column
+alter_tables = '''
+
+'''
 create_triggers = '''
 CREATE TRIGGER IF NOT EXISTS [update_last_visited]
 AFTER UPDATE OF visited_count
@@ -69,7 +73,14 @@ update_metadata_scraped_questions = 'UPDATE recents SET metadata_scraped=1 WHERE
 update_visited_count = "UPDATE recents SET visited_count=(SELECT visited_count FROM recents WHERE question_id=?)+1  where question_id=?"
 get_question = "SELECT * FROM recents WHERE question_id=?"
 insert_into_recents = "INSERT INTO recents(question_id) values(?)"
-get_recent = "SELECT question_id, visited_count, last_visited FROM recents ORDER BY last_visited DESC, visited_count DESC  LIMIT ? OFFSET ?"
+
+get_recent = '''
+select recents.question_id, title, desc, visited_count, last_visited from
+recents left join metadata on
+recents.question_id = metadata.question_id
+order by last_visited desc, visited_count desc LIMIT ? OFFSET ?;'''
+
+# get_recent = "SELECT question_id, visited_count, last_visited FROM recents ORDER BY last_visited DESC, visited_count DESC  LIMIT ? OFFSET ?"
 
 get_tags = "SELECT name, questions_count FROM tags ORDER BY questions_count DESC;"
 update_crawl_attempts = "UPDATE recents set crawl_attempts=crawl_attempts+1 where question_id=?"
