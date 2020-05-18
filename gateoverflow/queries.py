@@ -2,9 +2,10 @@
 
 create_tables = '''
 CREATE TABLE IF NOT EXISTS recents(
-    question_id INTEGER PRIMARY KEY, 
-    visited_count INTEGER NOT NULL DEFAULT 1, 
+    question_id INTEGER PRIMARY KEY,
+    visited_count INTEGER NOT NULL DEFAULT 1,
     metadata_scraped INTEGER DEFAULT 0,
+    crawl_attempts INTEGER DEFAULT 1,
     last_visited INTEGER(4) NOT NULL DEFAULT (STRFTIME('%s','now'))
     );
 CREATE TABLE IF NOT EXISTS metadata(
@@ -35,12 +36,12 @@ UPDATE recents SET last_visited =(STRFTIME('%s','now')) WHERE question_id = old.
 END
 '''
 create_default_tags = '''
-INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (1,'important',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=1)); 
-INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (2,'tricky',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=2)); 
-INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (3,'read-later',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=3)); 
-INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (4,'super-important',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=4)); 
-INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (5,'wrongly-attempted',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=5)); 
-INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (6,'easy',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=6)); 
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (1,'important',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=1));
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (2,'tricky',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=2));
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (3,'read-later',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=3));
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (4,'super-important',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=4));
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (5,'wrongly-attempted',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=5));
+INSERT OR REPLACE INTO tags(id, name, questions_count) VALUES (6,'easy',(SELECT COUNT(*) FROM tq_relation WHERE tag_id=6));
 '''
 insert_dummy_values = '''
     INSERT or REPLACE INTO recents(question_id, visited_count) VALUES (22, 12);
@@ -71,3 +72,5 @@ insert_into_recents = "INSERT INTO recents(question_id) values(?)"
 get_recent = "SELECT question_id, visited_count, last_visited FROM recents ORDER BY last_visited DESC, visited_count DESC  LIMIT ? OFFSET ?"
 
 get_tags = "SELECT name, questions_count FROM tags ORDER BY questions_count DESC;"
+update_crawl_attempts = "UPDATE recents set crawl_attempts=crawl_attempts+1 where question_id=?"
+delete_invalid_questions = "DELETE from recents where crawl_attempts>?"

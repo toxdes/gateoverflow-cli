@@ -20,7 +20,7 @@ class parser_actions:
     ADD_QUESTIONS_TO_TAGS = 4
 
 
-metadata_api_base = "http =//url-metadata.herokuapp.com"
+metadata_api_base = "http://url-metadata.herokuapp.com"
 
 # colored text
 

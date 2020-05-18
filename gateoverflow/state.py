@@ -22,3 +22,6 @@ DEBUG = False
 
 # title
 title_text = prettify_table([['G a t e   o v e r f l o w'.upper()]], [])
+
+# crawl_attempts_limit in order to delete possibly invalid question ids
+crawl_attempts_limit = 5
