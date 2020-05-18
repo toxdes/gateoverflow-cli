@@ -75,11 +75,29 @@ def list_command():
     res = c.fetchall()
     # title = 'QuestionID'.ljust(12) + 'Visited'.ljust(12) + 'Time'.ljust(12)
     # print(title)
-    headers = ['Question ID', 'Visited', 'Time']
+    headers = ['Question ID', 'Title', 'Description', 'Visits', 'Last Visited']
     data = []
+    k = s.column_width
     for row in res:
         row = [str(each) for each in row]
-        data.append([row[0], row[1], readable_date(row[2])])
+        frow = []
+        for each in row:
+            temp = ''
+            if(each == 'None'):
+                temp = 'NA'
+            if(len(each) > k):
+                d(print, f'length: {len(each)}')
+                each = each.replace("- GATE Overflow", "")
+                temp = each
+                if(len(each) > k):
+                    temp = each[:k-3] + "..."
+            else:
+                temp = each
+            frow.append(temp)
+        for each in frow:
+            d(print, f'after len: {len(each)}')
+        data.append([frow[0], frow[1], frow[2],
+                     frow[3], readable_date(frow[4])])
     print(prettify_table(data, headers))
 
 
