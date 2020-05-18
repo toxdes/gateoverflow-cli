@@ -1,12 +1,17 @@
 # Changelog
 
+### v0.3.1
+
+1. listing recents shows title and description of the question now. Added a `column_width` field to state in order to ellipsis the longer rows.
+2. added a field `crawl_attempts` in order to detect if the `question_id` is invalid. The `question_id`s are invalid if we fail to scrape their details for a certain number of times defined by `state.crawl_attempts_limit`.
+
 ### v0.3.0
-1. Experimenting with `pip` to make a runnable CLI tool. Prior to this, it would require to be run via `pip -m gateoverflow`. 
+
+1. Experimenting with `pip` to make a runnable CLI tool. Prior to this, it would require to be run via `pip -m gateoverflow`.
 2. Orgainzed README.
-3. Parser barely works, as specified in [Parser Commands](./README.md#usage) 
+3. Parser barely works, as specified in [Parser Commands](./README.md#usage)
 4. Major refactor, queries and debug-outputs.
 5. debug mode improved.
-
 
 ### v0.2.0
 
