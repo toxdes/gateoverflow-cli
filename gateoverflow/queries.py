@@ -1,6 +1,10 @@
 # Most static queries are listed here, yet there are a few cases where it's kinda easier if they are generated dynamically
 
 create_tables = '''
+CREATE TABLE IF NOT EXISTS user(
+    name varchar(200),
+    username varchar(200)
+);
 CREATE TABLE IF NOT EXISTS recents(
     question_id INTEGER PRIMARY KEY,
     visited_count INTEGER NOT NULL DEFAULT 1,
@@ -85,3 +89,4 @@ order by last_visited desc, visited_count desc LIMIT ? OFFSET ?;'''
 get_tags = "SELECT name, questions_count FROM tags ORDER BY questions_count DESC;"
 update_crawl_attempts = "UPDATE recents set crawl_attempts=crawl_attempts+1 where question_id=?"
 delete_invalid_questions = "DELETE from recents where crawl_attempts>?"
+create_user = "INSERT OR REPLACE INTO user(name, username) VALUES (?,?);"

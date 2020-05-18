@@ -23,7 +23,7 @@ Todo:
     Or, IDK maybe a Amazon S3 bucket?
   ■ Miscelleneous Improvements
     Just involves fixing breaking stuff, making it an eye-candy etc.
-  ■ default directory for the application
+  ■ default directory for the application @started(20-05-18 21:32)
     should be cross platform, writable
     check if database exists, if doesn't then have some user details when we create it to store user's personal information in that directory.
     such as username, name, etc.

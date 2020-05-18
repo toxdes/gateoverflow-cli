@@ -1,6 +1,6 @@
 import sys
 import logging
-from gateoverflow import state as s
+from gateoverflow.state import state as s
 # for later
 # logging.basicConfig(filename="debug_log.txt", level=logging.DEBUG)
 # d = logging.debug
@@ -8,8 +8,11 @@ from gateoverflow import state as s
 
 
 def d(f, args):
-    if s.DEBUG == True:
-        print('DEBUG: ', end="")
-        f(args)
+    if s['DEBUG'] == True:
+        if(f == 't'):
+            print(f'Reached TARGET: {args}')
+        else:
+            print('DEBUG: ', end="")
+            f(args)
     else:
         return

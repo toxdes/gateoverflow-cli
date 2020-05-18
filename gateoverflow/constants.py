@@ -1,9 +1,7 @@
-database_name = "test_database.db"
-title_text = '''
-********************
-* GO LINKS MANAGER *
-********************
-'''
+# project name
+project_name = "gateoverflow"
+database_name = "gateoverflow.db"
+title_text = 'G a t e O v e r f l o w'
 
 # TODO: what if unicodes are not supported in terminal ?
 shell_symbol = "→ "
@@ -34,3 +32,27 @@ class colors:
     END = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
+default_config = '''
+[DEFAULT]
+# database filename
+database_name=gateoverflow.db
+
+# shell symbol to show
+shell_symbol ="→ "  
+
+# for ls command, how many records to show by default
+how_many=10
+title_text='G a t e O v e r f l o w'
+
+# crawl_attempts_limit in order to delete possibly invalid question ids
+crawl_attempts_limit = 5
+
+# column_width: number of characters to allow for each column
+# if the data has more characters than this limit, it is truncated with adding "..." in the end
+# for example, "bruhbruhbruhbruh" will turn into "bruh..." if column width is 7
+# should be at least 10 cause the timestamp thing
+
+column_width = 12
+'''

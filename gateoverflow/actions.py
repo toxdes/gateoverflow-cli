@@ -1,15 +1,20 @@
 import os
-from gateoverflow import state as s
+from gateoverflow.state import state as s
 from gateoverflow import constants
 from gateoverflow.logger import d
 from gateoverflow import queries as q
-from gateoverflow.helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_logo
+from gateoverflow.helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_logo, ask
 modes = constants.modes
+
+
+def abort_program(status=-1):
+    print("Abort.")
+    exit(status)
 
 
 def exit_program():
     print("Okay, bye.")
-    s.stop = True
+    s['stop'] = True
 
 
 def print_help():
@@ -29,11 +34,11 @@ def clear_screen():
 
 def debug_toggle():
     res = ''
-    if s.DEBUG == True:
-        s.DEBUG = False
+    if s['DEBUG'] == True:
+        s['DEBUG'] = False
         res = 'OFF'
     else:
-        s.DEBUG = True
+        s['DEBUG'] = True
         res = 'ON'
     print(f'debug mode is {res}')
 
@@ -50,14 +55,14 @@ def get_switcher():
     switchers = {
         modes.DEFAULT: switcher,
     }
-    return switchers[s.mode]
+    return switchers[s['mode']]
 
 
 def list_command():
     # list_options = set(['r', 'q', 't', 'recent', 'questions', 'tags'])
     row_offset = 0
-    cmd = s.list_string.split(' ')
-    c = s.cursor
+    cmd = s['list_string'].split(' ')
+    c = s['cursor']
     d(print, 'lists recents')
     d(print, f'probably, you wanted to list: {cmd}')
     if len(cmd) > 2:
@@ -68,7 +73,7 @@ def list_command():
     try:
         how_many = cmd[1]
     except:
-        how_many = s.how_many  # default show only 10 records?
+        how_many = s['how_many']  # default show only 10 records?
     # what_to_show = cmd[1]
     d(print, f"omg you want this? : recents, {how_many} items")
     c.execute(q.get_recent, (how_many, row_offset))
@@ -77,7 +82,7 @@ def list_command():
     # print(title)
     headers = ['Question ID', 'Title', 'Description', 'Visits', 'Last Visited']
     data = []
-    k = s.column_width
+    k = s['column_width']
     for row in res:
         row = [str(each) for each in row]
         frow = []
@@ -104,8 +109,7 @@ def list_command():
 def crawler():
     count = uncrawled_metadata_count()
     print(f'Unscraped records: {count}')
-    q = input("Do you want to continue?(yes/no) (default: no): ")
-    if(q.lower() == 'yes' or q.lower() == 'y'):
+    if(ask()):
         # continue
         crawl_metadata()
     else:
@@ -120,7 +124,7 @@ def invalid_command():
 class Parser:
     @staticmethod
     def list_tags():
-        c = s.cursor
+        c = s['cursor']
         res = c.execute(q.get_tags)
         print(f'List of tags...')
         if res == None:
@@ -132,9 +136,9 @@ class Parser:
     def open_questions():
         print('Number(s) found, treating them as questionIDs, and opening each in web-browser...')
         # get the input list, stored in state
-        question_ids = s.questions_list
+        question_ids = s['questions_list']
         # insert into recent questions table, along with timestamp, update visited count if already visited
-        c = s.cursor
+        c = s['cursor']
         for each in question_ids:
             # check if already exists
             c.execute(q.get_question, [each])
@@ -147,14 +151,14 @@ class Parser:
                 # insert
                 c.execute(q.insert_into_recents, [each])
             open_link(f'https://gateoverflow.in/{each}')
-        s.conn.commit()
+        s['conn'].commit()
         print('Done!')
 
     @staticmethod
     def list_questions_of_tags():
         print(f'Only tag(s) found, listing questions of specified tags...')
-        tags, questions = s.tags, s.questions_list
-        c = s.cursor
+        tags, questions = s['tags'], s['questions_list']
+        c = s['cursor']
         res = c.execute(q.get_tags)
         tags_in_db = []
         for each in res:
@@ -181,9 +185,9 @@ class Parser:
 
     @staticmethod
     def add_questions_to_tags():
-        print(f'Adding {s.questions_list} to {s.tags}...')
-        tags, questions = s.tags, s.questions_list
-        c = s.cursor
+        print(f'Adding {s["questions_list"]} to {s["tags"]}...')
+        tags, questions = s['tags'], s['questions_list']
+        c = s['cursor']
         res = c.execute(q.get_tags)
         tags_in_db = []
         for each in res:
@@ -199,27 +203,27 @@ class Parser:
             if(ans == 'y' or ans == 'yes'):
                 create_tags_script = f'{create_tags_script}\nINSERT INTO tags(name,questions_count) VALUES ({each},0);'
         c.executescript(create_tags_script)
-        s.conn.commit()
+        s['conn'].commit()
         tq_insert_script = ''
         for q_id in questions:
             for tag in tags:
                 tq_insert_script = f'{tq_insert_script}\nINSERT OR REPLACE INTO tq_relation(question_id,tag_id) VALUES ({q_id},(SELECT id FROM tags WHERE name=\'{tag}\'));'
         c.executescript(tq_insert_script)
-        s.conn.commit()
+        s['conn'].commit()
 
 
 def handle_parser_action():
     pa = constants.parser_actions
-    if s.parser_action == pa.LIST_TAGS:
+    if s['parser_action'] == pa.LIST_TAGS:
         Parser.list_tags()
         return
-    if s.parser_action == pa.OPEN_QUESTIONS:
+    if s['parser_action'] == pa.OPEN_QUESTIONS:
         Parser.open_questions()
         return
-    if s.parser_action == pa.LIST_QUESTIONS_OF_TAGS:
+    if s['parser_action'] == pa.LIST_QUESTIONS_OF_TAGS:
         Parser.list_questions_of_tags()
         return
-    if s.parser_action == pa.ADD_QUESTIONS_TO_TAGS:
+    if s['parser_action'] == pa.ADD_QUESTIONS_TO_TAGS:
         Parser.add_questions_to_tags()
         return
     invalid_command()

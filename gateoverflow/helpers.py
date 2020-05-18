@@ -9,7 +9,7 @@ import requests
 import json
 from gateoverflow.logger import d
 from gateoverflow import constants
-from gateoverflow import state as s
+from gateoverflow.state import state as s
 from gateoverflow import queries as q
 # TODO: oh poor me, please update this function later for avoiding embarrassement
 
@@ -114,7 +114,7 @@ def open_link(link):
 
 
 def uncrawled_metadata_count():
-    c = s.cursor
+    c = s['cursor']
     c.execute(q.uncrawled_metadata_count)
     res = c.fetchone()
     d(print, f'Unscraped Records: {res[0]}')
@@ -122,7 +122,7 @@ def uncrawled_metadata_count():
 
 
 def crawl_metadata():
-    c = s.cursor
+    c = s['cursor']
     c.execute(q.get_unscraped_question_ids)
     res = c.fetchall()
     stmt = ""
@@ -174,4 +174,10 @@ def prettify_table(data, headers):
 
 
 def print_logo():
-    print(f'{constants.colors.GREEN}{constants.colors.BOLD}{s.title_text}{constants.colors.END}{constants.colors.END}')
+    print(
+        f'{constants.colors.GREEN}{constants.colors.BOLD}{prettify_table([[s["title_text"].upper()]], [])}{constants.colors.END}{constants.colors.END}')
+
+
+def ask():
+    q = input("Do you want to continue?(yes/no) (default: no): ")
+    return q.lower() == 'yes' or q.lower() == 'y'
