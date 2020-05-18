@@ -1,0 +1,34 @@
+
+Todo:
+  ■ make sql queries safe
+    currently, I generate a few sql queries dynamically, with straight up string substitution, which might be prone to sql-injection attacks, so, just move them to `queries.py` file, and then use "their" `?` for substitution, even though I'm not doing anything that requires security.
+  ✔ `ls` should show question description @started(20-05-18 17:32) @done(20-05-18 20:29) @lasted(2h57m35s)
+    we're scraping question metadata and storing it in the database, but not yet using it anywhere. 
+    So, ls should have a question-description column that gets information from that metadata table, and shows somethin like `NA` when the data is not available. Also, maybe run crawler routine in parellel when the program starts so the user doesn't have to worry about it.
+  ■ figure out how the command's handlers should be
+    python doesn't have switch statements, maybe there's reason for it. So, get rid of that switcher thingy so things can be done the "python way". 
+  ✔ delete possibly invalid questions @done(20-05-18 20:20)
+    questions are invalid if we fail to scrape their details for a certain number of times defined by `state.crawl_attempts_limit` 
+  ■ check out `cmd` module 
+    that handles command-line pretty well I suppose, I did from scratch cause I didn't know it existed.
+  ■ add tests for automated testing
+  ■ GUI
+    ■ web-server and frontend application
+      most idiots won't even use terminal, so figure out a way to add gui to this. I have this idea of having a web application that could be shipped with the module, and on command like `ui`, it might start a web server and open that web application in the browser, that way, I wouldn't have to worry about the platform-specific things, I don't know. But I'll need something like `flask` for it.
+    ■ browser-extension
+      A chrome extension is also a good feature to add, so when the users are on the website, they will be able to add the questions to their favourite tags right away from the browser. Hmm.
+
+  ■ Make it sharable
+    Add functionality to save the `.db` file to cloud, so the data is available everywhere. I don't want to host it myself, but I think there's google drive for everyone so maybe checkout google-drive's API.
+    Or, IDK maybe a Amazon S3 bucket?
+  ■ Miscelleneous Improvements
+    Just involves fixing breaking stuff, making it an eye-candy etc.
+  ■ default directory for the application
+    should be cross platform, writable
+    check if database exists, if doesn't then have some user details when we create it to store user's personal information in that directory.
+    such as username, name, etc.
+
+
+
+
+

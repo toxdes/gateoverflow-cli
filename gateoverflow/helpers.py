@@ -129,12 +129,16 @@ def crawl_metadata():
     for each in res:
         each = int(each[0])
         data = get_metadata(f'https://gateoverflow.in/{each}')
+        d(print, f'{data}')
+        d(print, f'questionid: {each}')
+        c.execute(q.update_crawl_attempts, [each])
         if data == None:
             continue
         c.execute(q.insert_into_metadata, (each, data['title'],
                                            data['desc'], data['image_url']))
         c.execute(
-            q.update_metadata_scraped_questions, (each))
+            q.update_metadata_scraped_questions, [each])
+    c.execute(q.delete_invalid_questions, [s.crawl_attempts_limit])
 
 
 '''
@@ -155,9 +159,9 @@ def get_metadata(link):
         res['title'] = data['title']
         res['desc'] = data['description']
         res['image_url'] = data['image']
-        res['title'] = data['title']
-    except:
+    except Exception as e:
         print('maybe internet is down. Error, Skipping!')
+        d(print, f'Error: {e}')
         res = None
     return res
 

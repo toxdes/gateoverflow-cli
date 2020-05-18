@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="gateoverflow",  # Replace with your own username
-    version="0.3.0",
+    version="0.3.1",
     author="Vaibhav Mali",
     author_email="malivp3494@gmail.com",
     description="A command line interface for gateoverflow links",

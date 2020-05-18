@@ -22,3 +22,12 @@ DEBUG = False
 
 # title
 title_text = prettify_table([['G a t e   o v e r f l o w'.upper()]], [])
+
+# crawl_attempts_limit in order to delete possibly invalid question ids
+crawl_attempts_limit = 5
+
+# column_width: number of characters to allow for each column
+# if the data has more characters than this limit, it is truncated with adding "..." in the end
+# for example, "bruhbruhbruhbruh" will turn into "bruh..." if column width is 7
+# should be at least 10 cause the timestamp thing
+column_width = 12
