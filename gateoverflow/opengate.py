@@ -70,6 +70,7 @@ def startup_routine():
     home_dir = Path.home()
     project_home = Path.joinpath(
         home_dir, f'.{constants.project_name}')
+    # TODO: fuck this, json is good enough, complete tomorrow.
     config_file = Path.joinpath(project_home, f'config')
     db_file = Path.joinpath(project_home, f'{s["database_name"]}')
     # requires python >= 3.5 for now
@@ -94,6 +95,10 @@ def startup_routine():
             print("Creating a brand new database...")
             if(ask()):
                 # Create a database
+                s['db_path'] = db_file
+                username = input('Your Username:')
+                name = input('Your Name:')
+                s['user'] = constants.User(username, name)
                 pass
             else:
                 print(
@@ -107,6 +112,7 @@ def startup_routine():
     if Path.exists(db_file):
         s["db_path"] = str(db_file)
     # parse the config file if exists, fallback to default ones.
+    # TODO: parser should differenciate types, such as integers for numbers and strings
     parser = ConfigParser()
     parser.read(config_file)
     d("t", "created parser, because config file was existing already")
@@ -114,10 +120,7 @@ def startup_routine():
     # TODO: hacky solution, improve this later
     loaded = parser['DEFAULT']
     for key in loaded:
-        if(key == 'title_text'):
-            s[key] = prettify_table([[str(loaded.get(key)).upper()]], [])
-        else:
-            s[key] = loaded.get(key)
+        s[key] = loaded.get(key)
         d(print, f'Config: key: {key}, value: {parser["DEFAULT"][key]}')
 
 
@@ -155,6 +158,26 @@ def main():
         d(print, "No need to alter tables.")
     c.executescript(q.create_triggers)
     c.executescript(q.create_default_tags)
+    res = c.execute(q.get_user)
+    if res == None:
+        print("You haven't added your details yet.")
+        print("Please give me your username, and name...")
+        if(ask()):
+            username = input('Enter Username: ')
+            name = input('Enter Name: ')
+            if(len(username) > 0 and len(name) > 0):
+                s['user'] = constants.User(username, name)
+                c.execute(q.create_user, [username, name])
+        else:
+            print("Fine, stay anonymous then")
+        s['user'] = constants.User()
+    else:
+        d('t', 'res is not null')
+        for row in res:
+            res = [str(each) for each in row]
+            d(print, f'{res[0]} | {res[1]}')
+            s['user'] = constants.User(res[0], res[1])
+            break
     # c.executescript(q.insert_dummy_values)
     # a.open_questions()
     # clear screen

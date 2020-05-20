@@ -89,4 +89,5 @@ order by last_visited desc, visited_count desc LIMIT ? OFFSET ?;'''
 get_tags = "SELECT name, questions_count FROM tags ORDER BY questions_count DESC;"
 update_crawl_attempts = "UPDATE recents set crawl_attempts=crawl_attempts+1 where question_id=?"
 delete_invalid_questions = "DELETE from recents where crawl_attempts>?"
-create_user = "INSERT OR REPLACE INTO user(name, username) VALUES (?,?);"
+create_user = "INSERT OR REPLACE INTO user(username, name) VALUES (?,?);"
+get_user = "SELECT * from user;"

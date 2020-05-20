@@ -176,6 +176,7 @@ def prettify_table(data, headers):
 def print_logo():
     print(
         f'{constants.colors.GREEN}{constants.colors.BOLD}{prettify_table([[s["title_text"].upper()]], [])}{constants.colors.END}{constants.colors.END}')
+    print(s['user'].greet())
 
 
 def ask():

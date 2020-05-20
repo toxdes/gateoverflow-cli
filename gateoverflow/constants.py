@@ -34,6 +34,15 @@ class colors:
     UNDERLINE = '\033[4m'
 
 
+class User:
+    def __init__(self, username='anonymous_user', name='bruh'):
+        self.username = username
+        self.name = name
+
+    def greet(self):
+        return f'Welcome, @{self.username}'
+
+
 default_config = '''
 [DEFAULT]
 # database filename

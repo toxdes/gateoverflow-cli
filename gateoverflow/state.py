@@ -41,5 +41,6 @@ state = {
     # TODO: what if unicodes are not supported in terminal ?
     'shell_symbol': "→ ",
     'database_name': "gateoverflow.db",
-    'db_path': None
+    'db_path': None,
+    'user': constants.User()
 }
