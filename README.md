@@ -8,6 +8,7 @@ open / manage links with the question ids(which are right there, next to questio
 - [Installation](#installation)
 - [Requirements](#requirements)
 - [Changelog](#changelog)
+  - [v0.4.0](#v040)
   - [v0.3.1](#v031)
   - [v0.2.0](#v020)
 - [Usage](#usage)
