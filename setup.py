@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/toxdes/opengate",
     install_requires=['tabulate',
-                      'python-dateutil', 'requests'],
+                      'python-dateutil', 'requests', 'toml>=0.10'],
     packages=setuptools.find_packages(),
     entry_points={
         "console_scripts": [

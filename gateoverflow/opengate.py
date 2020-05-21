@@ -6,6 +6,7 @@ import sys
 import random as r
 import pathlib
 from configparser import ConfigParser
+import toml
 # local imports
 from gateoverflow import queries as q
 from gateoverflow import constants
@@ -70,12 +71,14 @@ def startup_routine():
     home_dir = Path.home()
     project_home = Path.joinpath(
         home_dir, f'.{constants.project_name}')
-    # TODO: fuck this, json is good enough, complete tomorrow.
-    config_file = Path.joinpath(project_home, f'config')
+    # TODO: fuck this, toml is good enough, complete tomorrow.
+    config_file = Path.joinpath(project_home, f'config.toml')
     db_file = Path.joinpath(project_home, f'{s["database_name"]}')
     # requires python >= 3.5 for now
     # TODO: make it work for lower python versions, and windows
     # TODO: check if project_home is writable
+    sample_config = open(os.path.join(
+        os.path.abspath(os.curdir), 'gateoverflow/sample_config.toml'), 'r')
     if not Path.exists(project_home):
         # it is a fresh start
         print("It appears you are running this program for the first time, so I need to configure.")
@@ -86,7 +89,13 @@ def startup_routine():
         if not Path.exists(config_file):
             # create default config file
             # f = open(str(config_file), 'r+')
-            config_file.write_text(constants.default_config)
+            try:
+                default_config = toml.load(sample_config)
+            except Exception as e:
+                d(e)
+                print("Config file is invalid, quit.")
+                a.abort_program()
+            config_file.write_text(toml.dumps(default_config))
             d('t', 'wrote default config to file')
             print(
                 f"Config file created at {str(config_file)}.\nYou can modify it according to your taste.")
@@ -107,21 +116,28 @@ def startup_routine():
 
     # config file may not exist
     if not Path.exists(config_file):
-        config_file.write_text(constants.default_config)
+        try:
+            default_config = toml.load(sample_config)
+        except Exception as e:
+            d(e)
+            print("Config file is invalid, quit.")
+            a.abort_program()
+        config_file.write_text(toml.dumps(default_config))
 
     if Path.exists(db_file):
         s["db_path"] = str(db_file)
     # parse the config file if exists, fallback to default ones.
     # TODO: parser should differenciate types, such as integers for numbers and strings
-    parser = ConfigParser()
-    parser.read(config_file)
-    d("t", "created parser, because config file was existing already")
+    # TODO: support utf-8 for config file
+    user_config = toml.load(str(config_file))
+    d("t", "successfully loaded config file into an object")
     # load the relevant config into state
-    # TODO: hacky solution, improve this later
-    loaded = parser['DEFAULT']
-    for key in loaded:
-        s[key] = loaded.get(key)
-        d(print, f'Config: key: {key}, value: {parser["DEFAULT"][key]}')
+    # TODO: hacky solution, improve this parser later
+    for key in user_config:
+        if key not in s.keys():
+            continue
+        s[key] = user_config[key]
+        d(print, f'Config: key: {key}, value: {user_config[key]}')
 
 
 def main():
@@ -181,7 +197,7 @@ def main():
     # c.executescript(q.insert_dummy_values)
     # a.open_questions()
     # clear screen
-    # a.clear_screen()
+    a.clear_screen()
     s['switcher'] = a.get_switcher()
     for row in c.execute(q.get_all):
         d(pprint, f'[test]: row is: {row}')

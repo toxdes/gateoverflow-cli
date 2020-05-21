@@ -41,27 +41,3 @@ class User:
 
     def greet(self):
         return f'Welcome, @{self.username}'
-
-
-default_config = '''
-[DEFAULT]
-# database filename
-database_name=gateoverflow.db
-
-# shell symbol to show
-shell_symbol ="→ "  
-
-# for ls command, how many records to show by default
-how_many=10
-title_text='G a t e O v e r f l o w'
-
-# crawl_attempts_limit in order to delete possibly invalid question ids
-crawl_attempts_limit = 5
-
-# column_width: number of characters to allow for each column
-# if the data has more characters than this limit, it is truncated with adding "..." in the end
-# for example, "bruhbruhbruhbruh" will turn into "bruh..." if column width is 7
-# should be at least 10 cause the timestamp thing
-
-column_width = 12
-'''
