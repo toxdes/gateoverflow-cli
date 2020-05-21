@@ -130,7 +130,8 @@ class Parser:
         if res == None:
             print("No tags are created yet :(")
         for each in res:
-            print(f'#{each[0]} ({each[1]} questions)')
+            print(
+                f'{constants.colors.BLUE}#{each[0]}{constants.colors.END} ( {constants.colors.FAIL}{each[1]}{constants.colors.END} questions)')
 
     @staticmethod
     def open_questions():
@@ -157,6 +158,7 @@ class Parser:
     @staticmethod
     def list_questions_of_tags():
         print(f'Only tag(s) found, listing questions of specified tags...')
+        d('t', 'listing questions for tags')
         tags, questions = s['tags'], s['questions_list']
         c = s['cursor']
         res = c.execute(q.get_tags)
@@ -168,7 +170,7 @@ class Parser:
         tags = [a[1:] for a in tags]
         for each in tags:
             if each not in tags_in_db:
-                d(print, f'Tag {each} does not exist.')
+                print(f'#{each} does not exist.')
                 non_existant_tags.append(each)
                 continue
             existant_tags.append(each)
@@ -180,8 +182,16 @@ class Parser:
             if res == None:
                 print('Nothing to show.')
                 return
-            for each in res:
-                d(print, f'Question:{each[0]}\t Tag: #{each[1]}')
+            headers = ['QuestionID', 'Tag', 'Title',
+                       'Description', 'Visited Count']
+            k = s['column_width']
+            data = []
+            for row in res:
+                row = [str(each) for each in row]
+                data.append(row)
+            print(prettify_table(data, headers))
+        else:
+            print("Nothing to show.")
 
     @staticmethod
     def add_questions_to_tags():
@@ -195,13 +205,23 @@ class Parser:
         non_existant_tags = []
         existant_tags = []
         tags = [a[1:] for a in tags]
+        for each in tags:
+            if each not in tags_in_db:
+                print(f'#{each} does not exist.')
+                non_existant_tags.append(each)
+                continue
+            existant_tags.append(each)
+        d(print, f'Non existant tags: {non_existant_tags}')
+        d(print, f'Existant tags: {existant_tags}')
         create_tags_script = ''
         for each in non_existant_tags:
+            # FIXME: extract this y/n to a function.
             ans = input(
                 f'Tag #{each} does not exist, do you want to create it?(y/n)')
             ans = ans.lower()
             if(ans == 'y' or ans == 'yes'):
-                create_tags_script = f'{create_tags_script}\nINSERT INTO tags(name,questions_count) VALUES ({each},0);'
+                # FIXME: move this to queries.py for safety :)
+                create_tags_script = f'{create_tags_script}\nINSERT INTO tags(name,questions_count) VALUES (\'{each}\',1);'
         c.executescript(create_tags_script)
         s['conn'].commit()
         tq_insert_script = ''
