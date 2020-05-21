@@ -1,5 +1,14 @@
 # Changelog
 
+### v0.4.0
+
+1. Added support for user defined configuration file, using `config.toml` for it. The program now has it's own directory where the `.db` file resides, and the `database_name` field of the `config` can be used to specify which `db` should be used.
+2. Added a `user` table, which stores information about the database itself, currently this only includes `username` and `name` but later it will be helpful while merging various databases.
+3. The output of the `#` commands is now tabulated.
+4. Logger now has `t` parameter to quickly debug whether if a point is reachable during execution.
+5. Introduced colors for the text with ANSI escape characters, for debug as well as normal output. It is still WIP, but hey.
+6. A lot of bugfixes and code refactoring.
+
 ### v0.3.1
 
 1. listing recents shows title and description of the question now. Added a `column_width` field to state in order to ellipsis the longer rows.

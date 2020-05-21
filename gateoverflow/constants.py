@@ -1,9 +1,7 @@
-database_name = "test_database.db"
-title_text = '''
-********************
-* GO LINKS MANAGER *
-********************
-'''
+# project name
+project_name = "gateoverflow"
+database_name = "gateoverflow.db"
+title_text = 'G a t e O v e r f l o w'
 
 # TODO: what if unicodes are not supported in terminal ?
 shell_symbol = "→ "
@@ -34,3 +32,12 @@ class colors:
     END = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
+class User:
+    def __init__(self, username='anonymous_user', name='bruh'):
+        self.username = username
+        self.name = name
+
+    def greet(self):
+        return f'Welcome, @{self.username}'

@@ -51,8 +51,17 @@ Don't worry about this unless you are going to develop.
 - `python-dateutil`
 - `requests`
 - `tabulate`
+- `toml`
 
 # Changelog
+
+### v0.4.0
+
+1. Added support for user defined configuration file, uses `config.toml` for it.
+2. The program now has it's own `project_home` directory.
+3. Added a `user` table, which stores meta information about the database.
+4. Introduced colors for the text with ANSI escape characters
+5. Bugfixes, refactor and gucci.
 
 ### v0.3.1
 
