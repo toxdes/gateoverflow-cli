@@ -138,7 +138,7 @@ def crawl_metadata():
                                            data['desc'], data['image_url']))
         c.execute(
             q.update_metadata_scraped_questions, [each])
-    c.execute(q.delete_invalid_questions, [s.crawl_attempts_limit])
+    c.execute(q.delete_invalid_questions, [s['crawl_attempts_limit']])
 
 
 '''

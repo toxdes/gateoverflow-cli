@@ -177,7 +177,10 @@ class Parser:
         d(print, f'Existant tags: {existant_tags}')
         if len(existant_tags) != 0:
             # TODO: find a way to move this query to queries.py
-            query = f'SELECT question_id, (select name from tags where id=tag_id) from tq_relation as TQ WHERE tag_id IN (SELECT id FROM tags WHERE name IN ({"?"*len(existant_tags)}))'
+            bruh = (",?"*len(existant_tags)).split(',')[1:]
+            bruh = ','.join(bruh)
+            query = f'select ogq as question_id, tagname, title, visited_count desc from (select question_id as ogq, (select tags.name from tags where id=tag_id)as tagname from tq_relation where tag_id in (select id from tags where name in ({bruh}))) left join metadata on ogq = metadata.question_id left join recents on ogq = recents.question_id;'
+            d(print, query)
             res = c.execute(query, existant_tags)
             if res == None:
                 print('Nothing to show.')
@@ -229,6 +232,8 @@ class Parser:
             for tag in tags:
                 tq_insert_script = f'{tq_insert_script}\nINSERT OR REPLACE INTO tq_relation(question_id,tag_id) VALUES ({q_id},(SELECT id FROM tags WHERE name=\'{tag}\'));'
         c.executescript(tq_insert_script)
+        for tag in tags:
+            c.execute(q.update_questions_count, [each])
         s['conn'].commit()
 
 

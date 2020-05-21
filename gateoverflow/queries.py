@@ -91,3 +91,4 @@ update_crawl_attempts = "UPDATE recents set crawl_attempts=crawl_attempts+1 wher
 delete_invalid_questions = "DELETE from recents where crawl_attempts>?"
 create_user = "INSERT OR REPLACE INTO user(username, name) VALUES (?,?);"
 get_user = "SELECT * from user;"
+update_questions_count = 'UPDATE tags SET questions_count=questions_count+1 WHERE id=?'
