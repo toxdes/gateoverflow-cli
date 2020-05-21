@@ -1,3 +1,10 @@
+Today:
+  ■ use toml for config, cause I'm familiar with it, has a good standard, later I can switch to something appropriate
+  ■ figure out how to merge two different sqlite databases
+  ■ prettify tags output, for table and questions, just like recents
+  ■ use colors for that
+  ■ maybe add google drive api
+  ■ test all of these implementations 
 
 Todo:
   ■ make sql queries safe
