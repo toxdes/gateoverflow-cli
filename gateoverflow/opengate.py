@@ -71,66 +71,46 @@ def startup_routine():
     home_dir = Path.home()
     project_home = Path.joinpath(
         home_dir, f'.{constants.project_name}')
-    # TODO: fuck this, toml is good enough, complete tomorrow.
-    config_file = Path.joinpath(project_home, f'config.toml')
-    db_file = Path.joinpath(project_home, f'{s["database_name"]}')
     # requires python >= 3.5 for now
     # TODO: make it work for lower python versions, and windows
     # TODO: check if project_home is writable
     sample_config = open(os.path.join(
         os.path.abspath(os.curdir), 'gateoverflow/sample_config.toml'), 'r')
+    config_file = Path.joinpath(project_home, f'config.toml')
+    db_file = Path.joinpath(project_home, f'{s["database_name"]}')
+    # home folder may not exists, in that case it's a fresh start
     if not Path.exists(project_home):
         # it is a fresh start
         print("It appears you are running this program for the first time, so I need to configure.")
         print("Creating Project directory...")
         Path.mkdir(project_home, exist_ok=True, parents=True)
         d('t', 'created path')
-        print('Creating new config...')
-        if not Path.exists(config_file):
-            # create default config file
-            # f = open(str(config_file), 'r+')
-            try:
-                default_config = toml.load(sample_config)
-            except Exception as e:
-                d(e)
-                print("Config file is invalid, quit.")
-                a.abort_program()
-            config_file.write_text(toml.dumps(default_config))
-            d('t', 'wrote default config to file')
-            print(
-                f"Config file created at {str(config_file)}.\nYou can modify it according to your taste.")
-        if not Path.exists(db_file):
-            print("No default database found.")
-            print("Creating a brand new database...")
-            if(ask()):
-                # Create a database
-                s['db_path'] = db_file
-                username = input('Your Username:')
-                name = input('Your Name:')
-                s['user'] = constants.User(username, name)
-                pass
-            else:
-                print(
-                    "Okay. There's no database, you should copy your *.db file to ${project_home}")
-    s['project_home'] = project_home
 
     # config file may not exist
     if not Path.exists(config_file):
         try:
+            # TODO: sample config file should be copied with comments
             default_config = toml.load(sample_config)
         except Exception as e:
             d(e)
             print("Config file is invalid, quit.")
             a.abort_program()
+        print('Creating default config...')
         config_file.write_text(toml.dumps(default_config))
-
-    if Path.exists(db_file):
-        s["db_path"] = str(db_file)
+        d('t', 'wrote sample config.')
+        print(
+            f"Config file created at {str(config_file)}.\nYou can modify it according to your taste.")
+    # load the config into state
     # parse the config file if exists, fallback to default ones.
     # TODO: parser should differenciate types, such as integers for numbers and strings
     # TODO: support utf-8 for config file
-    user_config = toml.load(str(config_file))
-    d("t", "successfully loaded config file into an object")
+    try:
+        user_config = toml.load(str(config_file))
+        d("t", "successfully loaded config file into an object")
+    except Exception as e:
+        d(print, f'{e}')
+        print("user config is invalid.")
+        a.abort_program()
     # load the relevant config into state
     # TODO: hacky solution, improve this parser later
     for key in user_config:
@@ -138,6 +118,25 @@ def startup_routine():
             continue
         s[key] = user_config[key]
         d(print, f'Config: key: {key}, value: {user_config[key]}')
+    d('t', 'user config loaded into state')
+    db_file = Path.joinpath(project_home, f'{s["database_name"]}')
+    if not Path.exists(db_file):
+        print("No default database found.")
+        print("Creating a brand new database...")
+        if(ask()):
+            # Create a database
+            s['db_path'] = db_file
+            username = input('Your Username:')
+            name = input('Your Name:')
+            s['user'] = constants.User(username, name)
+            pass
+        else:
+            print(
+                "Okay. There's no database, you should copy your *.db file to ${project_home}")
+    s['project_home'] = project_home
+
+    if Path.exists(db_file):
+        s["db_path"] = str(db_file)
 
 
 def main():
@@ -174,7 +173,8 @@ def main():
         d(print, "No need to alter tables.")
     c.executescript(q.create_triggers)
     c.executescript(q.create_default_tags)
-    res = c.execute(q.get_user)
+    c.execute(q.get_user)
+    res = c.fetchone()
     if res == None:
         print("You haven't added your details yet.")
         print("Please give me your username, and name...")
@@ -186,17 +186,13 @@ def main():
                 c.execute(q.create_user, [username, name])
         else:
             print("Fine, stay anonymous then")
-        s['user'] = constants.User()
+            s['user'] = constants.User()
     else:
         d('t', 'res is not null')
-        for row in res:
-            res = [str(each) for each in row]
-            d(print, f'{res[0]} | {res[1]}')
-            s['user'] = constants.User(res[0], res[1])
-            break
+        d(print, f'{res}')
+        res = [str(each) for each in res]
+        s['user'] = constants.User(res[1], res[0])
     # c.executescript(q.insert_dummy_values)
-    # a.open_questions()
-    # clear screen
     a.clear_screen()
     s['switcher'] = a.get_switcher()
     for row in c.execute(q.get_all):

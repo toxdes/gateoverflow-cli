@@ -7,9 +7,9 @@ from gateoverflow.helpers import readable_date, open_link, uncrawled_metadata_co
 modes = constants.modes
 
 
-def abort_program(status=-1):
+def abort_program(status=1):
     print("Abort.")
-    exit(status)
+    exit(int(status))
 
 
 def exit_program():
@@ -199,7 +199,7 @@ class Parser:
         for each in non_existant_tags:
             ans = input(
                 f'Tag #{each} does not exist, do you want to create it?(y/n)')
-            ans = ans.tolower()
+            ans = ans.lower()
             if(ans == 'y' or ans == 'yes'):
                 create_tags_script = f'{create_tags_script}\nINSERT INTO tags(name,questions_count) VALUES ({each},0);'
         c.executescript(create_tags_script)
