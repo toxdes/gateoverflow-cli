@@ -74,8 +74,6 @@ def startup_routine():
     # requires python >= 3.5 for now
     # TODO: make it work for lower python versions, and windows
     # TODO: check if project_home is writable
-    sample_config = open(os.path.join(
-        os.path.abspath(os.curdir), 'gateoverflow/sample_config.toml'), 'r')
     config_file = Path.joinpath(project_home, f'config.toml')
     db_file = Path.joinpath(project_home, f'{s["database_name"]}')
     # home folder may not exists, in that case it's a fresh start
@@ -88,15 +86,9 @@ def startup_routine():
 
     # config file may not exist
     if not Path.exists(config_file):
-        try:
-            # TODO: sample config file should be copied with comments
-            default_config = toml.load(sample_config)
-        except Exception as e:
-            d(e)
-            print("Config file is invalid, quit.")
-            a.abort_program()
         print('Creating default config...')
-        config_file.write_text(toml.dumps(default_config))
+        # FIXME: use sample_config.toml instead of this string representation
+        config_file.write_text(constants.sample_config)
         d('t', 'wrote sample config.')
         print(
             f"Config file created at {str(config_file)}.\nYou can modify it according to your taste.")

@@ -1,6 +1,6 @@
 # Changelog
 
-### v0.4.0
+### v0.4.1
 
 1. Added support for user defined configuration file, using `config.toml` for it. The program now has it's own directory where the `.db` file resides, and the `database_name` field of the `config` can be used to specify which `db` should be used.
 2. Added a `user` table, which stores information about the database itself, currently this only includes `username` and `name` but later it will be helpful while merging various databases.
