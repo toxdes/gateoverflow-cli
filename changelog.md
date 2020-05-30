@@ -1,6 +1,12 @@
 # Changelog
 
-### v0.4.1
+### v0.4.2
+
+1. Minor bugfixes cause I've not tested it enough, I'm fixing the bugs as I encounter them, through minor releases.
+2. Most of the things done here are self explanatory. I could mention them through verbose commiting but vscode doesn't support it yet and I'm too lazy to use terminal for it.
+3. Introduced emotes in readme I don't even know if it will be a good idea. :(
+
+### v0.4.0
 
 1. Added support for user defined configuration file, using `config.toml` for it. The program now has it's own directory where the `.db` file resides, and the `database_name` field of the `config` can be used to specify which `db` should be used.
 2. Added a `user` table, which stores information about the database itself, currently this only includes `username` and `name` but later it will be helpful while merging various databases.

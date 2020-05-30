@@ -1,8 +1,12 @@
-# Gateoverflow CLI
+# Gateoverflow CLI :tada:
 
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 
-# Table of Contents
+#### Latest Release v0.4.2 :zap:
+
+Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
+
+# Table of Contents :card_index:
 
 - [Motivation](#motivation)
 - [Installation](#installation)
@@ -18,7 +22,7 @@ open / manage links with the question ids(which are right there, next to questio
 - [Future](#future)
 - [Release Checklist](#release-checklist)
 
-# Motivation
+# Motivation :sleepy:
 
 Scanning QR codes from the book is really inefficient, so is the `Lists` feature of Gateoverflow Website.
 With this tool, one can open / manage those links with the question ids(which are right there, next to question title), create new lists (called as `tags` here cause it's one too many letters shorter than `lists`) of questions.
@@ -28,7 +32,7 @@ I just wanted to create this project to know how far I can push myself to do a _
 
 I think I'll write more about this later.
 
-# Installation
+# Installation :rocket:
 
 1. Install [python](https://www.python.org/downloads/). You can this step if you already have python installed.
 2. Open Command Prompt / Terminal, and execute
@@ -43,7 +47,7 @@ $ pip install gateoverflow
 $ gateoverflow
 ```
 
-# Requirements
+# Requirements :octocat:
 
 Don't worry about this unless you are going to develop.
 
@@ -54,7 +58,7 @@ Don't worry about this unless you are going to develop.
 - `tabulate`
 - `toml`
 
-# Changelog
+# Changelog :pencil:
 
 ### v0.4.0
 
@@ -81,7 +85,7 @@ Don't worry about this unless you are going to develop.
 
 Read [full changelog](./changelog.md)
 
-# Usage
+# Usage :fire:
 
 ### Parser Commands
 
@@ -117,7 +121,7 @@ Suppose the link to the question is `https://gateoverflow.in/6969`, then the que
 - Questions could even be added to multiple tags at the same time by doing something like `2424,23232,3234, #important, #good, #hard` to add those questions to specified tags.
 - `create` would create a new tag. E.g. `create #not-so-cool` to create a tag named `not-so-cool`.
 
-# Future
+# Future :sleepy:
 
 I'm planning to add the following features, assuming I overcome the biggest challenge of not abandoning this.
 
@@ -131,7 +135,7 @@ I'm planning to add the following features, assuming I overcome the biggest chal
 - Travis CI?
 - Currently PIP works, but create some standalone OS-specific releases?
 
-# Release Checklist
+# Release Checklist :pencil2:
 
 1. Does it work?
 2. Are changes merged with master?
