@@ -8,19 +8,21 @@ Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow)
 
 # Table of Contents :clipboard:
 
-- [Motivation](#motivation--sleepy-)
-- [Installation](#installation--rocket-)
-- [Requirements](#requirements--hammer-and-wrench-)
-- [Changelog :pencil:](#changelog--pencil-)
+- [Gateoverflow CLI](#gateoverflow-cli-tada) - [Latest Release v0.4.2](#latest-release-v042-zap)
+- [Table of Contents](#table-of-contents-clipboard)
+- [Motivation](#motivation-sleepy)
+- [Installation](#installation-rocket)
+- [Requirements](#requirements-hammer_and_wrench)
+- [Changelog](#changelog-pencil)
   - [v0.4.0](#v040)
   - [v0.3.1](#v031)
   - [v0.2.0](#v020)
-- [Usage](#usage--fire-)
+- [Usage](#usage-fire)
   - [Parser Commands](#parser-commands)
   - [Commands](#commands)
   - [Usage Examples](#usage-examples)
-- [Future](#future--sleepy-)
-- [Release Checklist](#release-checklist--pencil2-)
+- [Future](#future-sleepy)
+- [Release Checklist](#release-checklist-pencil2)
 
 # Motivation :sleepy:
 
