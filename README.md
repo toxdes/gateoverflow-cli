@@ -59,6 +59,7 @@ Don't worry about this unless you are going to develop.
 - `requests`
 - `tabulate`
 - `toml`
+- `twine`
 
 # Changelog :pencil:
 
