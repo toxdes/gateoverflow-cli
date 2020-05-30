@@ -117,11 +117,7 @@ def startup_routine():
         print("Creating a brand new database...")
         if(ask()):
             # Create a database
-            s['db_path'] = db_file
-            username = input('Your Username:')
-            name = input('Your Name:')
-            s['user'] = constants.User(username, name)
-            pass
+            s['db_path'] = str(db_file)
         else:
             print(
                 "Okay. There's no database, you should copy your *.db file to ${project_home}")
@@ -168,6 +164,7 @@ def main():
     c.execute(q.get_user)
     res = c.fetchone()
     if res == None:
+        d('t', "res is none for q.get_user")
         print("You haven't added your details yet.")
         print("Please give me your username, and name...")
         if(ask()):
@@ -176,7 +173,9 @@ def main():
             if(len(username) > 0 and len(name) > 0):
                 s['user'] = constants.User(username, name)
                 c.execute(q.create_user, [username, name])
+                d('t', 'added user info after asking the same to the user')
         else:
+            d('t', 'user refused to give username and name')
             print("Fine, stay anonymous then")
             s['user'] = constants.User()
     else:
