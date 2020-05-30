@@ -2,25 +2,25 @@
 
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 
-#### Latest Release v0.4.2 :fire:
+#### Latest Release v0.4.2 :zap:
 
 Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
 
 # Table of Contents :clipboard:
 
-- [Motivation](#motivation)
-- [Installation](#installation)
-- [Requirements](#requirements)
-- [Changelog](#changelog)
+- [Motivation](#motivation--sleepy-)
+- [Installation](#installation--rocket-)
+- [Requirements](#requirements--hammer-and-wrench-)
+- [Changelog :pencil:](#changelog--pencil-)
   - [v0.4.0](#v040)
   - [v0.3.1](#v031)
   - [v0.2.0](#v020)
-- [Usage](#usage)
+- [Usage](#usage--fire-)
   - [Parser Commands](#parser-commands)
   - [Commands](#commands)
   - [Usage Examples](#usage-examples)
-- [Future](#future)
-- [Release Checklist](#release-checklist)
+- [Future](#future--sleepy-)
+- [Release Checklist](#release-checklist--pencil2-)
 
 # Motivation :sleepy:
 
