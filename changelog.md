@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.4.3
+
+1. Added version argument, on any of the `-v`, `-version`, `--version`, shows the current version of the program.
+2. Added latest version check to crawler too, cause why not!
+
 ### v0.4.2
 
 1. Minor bugfixes cause I've not tested it enough, I'm fixing the bugs as I encounter them, through minor releases.

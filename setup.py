@@ -1,11 +1,11 @@
 import setuptools
-
+from gateoverflow import __version__
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="gateoverflow",  # Replace with your own username
-    version="0.4.2",
+    version=__version__,
     author="Vaibhav Mali",
     author_email="malivp3494@gmail.com",
     description="A command line interface for gateoverflow links",
