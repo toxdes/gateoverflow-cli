@@ -62,7 +62,9 @@ Don't worry about this unless you are going to develop.
 - `requests`
 - `tabulate`
 - `toml`
-- `twine`
+- `setuptools >= 38.6.0`
+- `wheel >= 0.31.0`
+- `twine 1.11.0`
 
 # Changelog :pencil:
 

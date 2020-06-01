@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.4.4
+
+Fixing issues with the pypi's readme file
+
 ### v0.4.3
 
 1. Added version argument, on any of the `-v`, `-version`, `--version`, shows the current version of the program.
