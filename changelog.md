@@ -1,6 +1,6 @@
 # Changelog
 
-### v0.4.4
+### v0.4.4 - v.0.4.5
 
 Fixing issues with the pypi's readme file
 

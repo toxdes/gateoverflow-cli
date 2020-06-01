@@ -1,7 +1,11 @@
 import setuptools
+import re
 from gateoverflow import __version__
 with open("README.md", "r") as fh:
     long_description = fh.read()
+    # Remove emoji's from readme because pypi doesn't render it
+    p = re.compile(':\w*:')
+    long_description = p.sub('', long_description)
 
 setuptools.setup(
     name="gateoverflow",  # Replace with your own username
