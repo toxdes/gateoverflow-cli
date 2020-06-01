@@ -3,7 +3,7 @@
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 The codebase is _heavily_ inspired by [this](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition) fizzbuzz implementation.
 
-#### Latest Release v0.4.3 :zap:
+#### Latest Release v0.4.5 :zap:
 
 Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
 
