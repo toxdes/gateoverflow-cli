@@ -3,6 +3,8 @@ import shlex
 from tabulate import tabulate
 import os
 import subprocess
+import sys
+import re
 from pprint import pprint
 from dateutil.relativedelta import relativedelta
 import requests
@@ -11,6 +13,7 @@ from gateoverflow.logger import d
 from gateoverflow import constants
 from gateoverflow.state import state as s
 from gateoverflow import queries as q
+from gateoverflow import __version__
 # TODO: oh poor me, please update this function later for avoiding embarrassement
 
 
@@ -182,3 +185,36 @@ def print_logo():
 def ask():
     q = input("Do you want to continue?(yes/no) (default: no): ")
     return q.lower() == 'yes' or q.lower() == 'y'
+
+
+def latest_version_check():
+    print('Checking for latest update...')
+    res = subprocess.check_output(
+        [sys.executable, '-m', 'pip', 'search', 'gateoverflow'])
+    res = str(res)
+    d(print, f'{res}')
+    p = re.compile("\d\.\d\.\d")
+    matches = [str(each) for each in p.findall(res)]
+    if(len(matches) < 2):
+        print("Something's wrong with package.")
+        return
+    matches[1] = __version__
+    # TODO; what if the user is building from source, and not using pip
+    if matches[0] != matches[1]:
+        one = [int(each) for each in matches[0].split('.')]
+        two = [int(each) for each in matches[1].split('.')]
+        print(f'Latest release: {matches[0]}')
+        for i in range(len(one)):
+            if(one[i] == two[i]):
+                continue
+            if(two[i] > one[i]):
+                print('You are ahead of the lastest stable release.\nNice!')
+                return
+            print(
+                f'You are not using the latest release. To upgrade to a latest release, run ')
+            print(prettify_table(
+                [['python -m pip install gateoverflow --upgrade']], []))
+            break
+    else:
+        print('You are already at a latest release.')
+    pass

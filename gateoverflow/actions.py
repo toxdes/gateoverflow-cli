@@ -3,7 +3,7 @@ from gateoverflow.state import state as s
 from gateoverflow import constants
 from gateoverflow.logger import d
 from gateoverflow import queries as q
-from gateoverflow.helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_logo, ask
+from gateoverflow.helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_logo, ask, latest_version_check
 modes = constants.modes
 
 
@@ -112,6 +112,7 @@ def crawler():
     if(ask()):
         # continue
         crawl_metadata()
+        latest_version_check()
     else:
         print('Abort.')
         return

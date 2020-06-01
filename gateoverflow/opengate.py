@@ -9,11 +9,12 @@ from configparser import ConfigParser
 import toml
 # local imports
 from gateoverflow import queries as q
+from gateoverflow import __version__
 from gateoverflow import constants
 from gateoverflow import actions as a
 from gateoverflow.state import state as s
 from gateoverflow.logger import d
-from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_logo, ask
+from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_logo, ask, latest_version_check
 modes = constants.modes
 
 
@@ -197,11 +198,15 @@ def main():
 
 def start():
     # for starting cli with debug = true by passing -d or --debug
+    # TODO: use argparse here
     if(len(sys.argv) >= 2):
         for each in sys.argv:
             if(each == '-d' or each == '--debug'):
                 s['DEBUG'] = True
-                break
+            if(each == '-v' or each == '-version' or each == '--version'):
+                print(f'gateoverflow-cli v{__version__}')
+                latest_version_check()
+                exit(int(0))
     if s['DEBUG'] == True:
         main()
     else:
