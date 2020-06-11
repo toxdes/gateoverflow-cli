@@ -3,7 +3,7 @@
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 The codebase is _heavily_ inspired by [this](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition) fizzbuzz implementation.
 
-#### Latest Release v0.4.5 :zap:
+#### Latest Release v0.4.6 :zap:
 
 Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
 
@@ -11,7 +11,7 @@ Read [full changelog](./changelog.md)
 
 # Table of Contents :clipboard:
 
-- [Gateoverflow CLI](#gateoverflow-cli-tada) - [Latest Release v0.4.2](#latest-release-v042-zap)
+- [Gateoverflow CLI](#gateoverflow-cli-tada) - [Latest Release v0.4.6](#latest-release-v046-zap)
 - [Table of Contents](#table-of-contents-clipboard)
 - [Motivation](#motivation-sleepy)
 - [Installation](#installation-rocket)
