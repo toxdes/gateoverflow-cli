@@ -187,19 +187,29 @@ def ask():
     return q.lower() == 'yes' or q.lower() == 'y'
 
 
+# sends HTTP request to pypi and pattern matches with version string.
+
 def latest_version_check():
     print('Checking for latest update...')
-    res = subprocess.check_output(
-        [sys.executable, '-m', 'pip', 'search', 'gateoverflow'])
-    res = str(res)
-    d(print, f'{res}')
-    p = re.compile("\d\.\d\.\d")
-    matches = [str(each) for each in p.findall(res)]
-    if(len(matches) < 2):
-        print("Something's wrong with package.")
+    res = None
+    try:
+        res = requests.get('https://pypi.org/project/gateoverflow')
+        if not res.ok:
+            d('t', "Request to pypi website failed, result of GET is not OK")
+            print("Request to server failed.")
+            return
+        res = str(res.text)
+    except:
+        print("Couldn't connect to the Internet.")
         return
-    matches[1] = __version__
-    # TODO; what if the user is building from source, and not using pip
+
+    p = re.compile("gateoverflow \d\.\d\.\d")
+    matches = [str(each) for each in p.findall(res)]
+    if len(matches) < 1:
+        return
+    matches = [matches[0][len('gateoverflow '):]]
+    matches.append(__version__)
+    d(print, f'Matches are: {matches}')
     if matches[0] != matches[1]:
         one = [int(each) for each in matches[0].split('.')]
         two = [int(each) for each in matches[1].split('.')]
