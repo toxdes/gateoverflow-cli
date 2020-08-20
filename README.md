@@ -39,7 +39,14 @@ I think I'll write more about this later.
 
 # Installation :rocket:
 
-1. Install [python](https://www.python.org/downloads/). You can this step if you already have python installed.
+1. Install [python](https://www.python.org/downloads/). You can skip this step if you already have python installed.
+
+2. Make sure you have `pip` installed by executing 
+```sh
+$ python -m pip --version
+```
+If it says something like "Module not found: pip", then you should install it.
+
 2. Open Command Prompt / Terminal, and execute
 
 ```sh
@@ -51,6 +58,7 @@ $ pip install gateoverflow
 ```sh
 $ gateoverflow
 ```
+The supported commands and howto's are in [usage](#usage-fire) section.
 
 # Requirements :hammer_and_wrench:
 
