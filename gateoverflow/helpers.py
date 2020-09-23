@@ -89,6 +89,8 @@ def parse_cmd(in_str):
         action = constants.parser_actions.LIST_QUESTIONS_OF_TAGS
     if(len(tags) == 0):
         action = constants.parser_actions.OPEN_QUESTIONS
+    if(len(tags) == 0 and len(nums) == 0):
+        action = constants.parser_actions.DO_NOTHING
     d(print, f'error: {error}')
     d(print, f'nums: {nums}')
     d(print, f'tags: {tags}')

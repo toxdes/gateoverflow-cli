@@ -276,9 +276,16 @@ class Parser:
             c.execute(q.update_questions_count, [each])
         s['conn'].commit()
 
+    @staticmethod
+    def do_nothing():
+        pass
+
 
 def handle_parser_action():
     pa = constants.parser_actions
+    if s['parser_action'] == pa.DO_NOTHING:
+        Parser.do_nothing()
+        return
     if s['parser_action'] == pa.LIST_TAGS:
         Parser.list_tags()
         return
