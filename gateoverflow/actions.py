@@ -17,13 +17,53 @@ def exit_program():
     s['stop'] = True
 
 
+# print help message.
+
+COMMANDS_HELP = '''
+Commands
+    
+    q, quit
+        Exit the program normally.
+    
+    h, help
+        Show this help message.
+    
+    ls <n>
+        List recently opened links, at most 'n' records.
+    
+    cls, clear
+        Clear the screen / terminal.
+    
+    debug-toggle
+        Toggle the debug output.
+    
+    crawler
+        Scrape metadata of the recently opened questions so that they are more readable.
+'''
+
+PARSER_USAGE_HELP = '''
+Usage Examples (Parser)
+
+    $ 2345,2323,4344, #important
+        Adds questions `2345,2323,4344` to `#important`.
+
+    $ #wrongly-attempted
+        Lists the questions in `#wrongly-attempted`, sorted with mostly visited.
+
+    $ tags
+        Lists all of the available tags. `#recent` is a default tag, which stores all opened `questions`
+
+    $ 2424,23232,3234, #important, #good, #hard 
+        Questions could even be added to multiple tags at the same time by doing something like  to add those questions to specified tags.
+
+    $ create
+         create a new tag. E.g. `create #not-so-cool` to create a tag named `not-so-cool`.
+'''
+
+
 def print_help():
-    print("Commands - ")
-    for each in switcher.keys():
-        try:
-            print(f'\t{each}\t-\t{ switcher_help[each]}')
-        except:
-            print(f"Help not available for command: {each}")
+    print(COMMANDS_HELP)
+    print(PARSER_USAGE_HELP)
 
 
 def clear_screen():
@@ -66,8 +106,7 @@ def list_command():
     d(print, 'lists recents')
     d(print, f'probably, you wanted to list: {cmd}')
     if len(cmd) > 2:
-        d(print, 'Invalid option')
-        d(print, switcher_help['ls'])
+        d(print, 'Invalid argument to ls.')
         return
     how_many = None
     try:
@@ -268,21 +307,6 @@ switcher = {
     'clear': clear_screen,
     'parser': handle_parser_action,
     'invalid': invalid_command,
-}
-
-# help description for each action
-switcher_help = {
-    'q': "Alias to quit. Exit the program normally.",
-    'h': "Alias to help. Shows available commands.",
-    '#': "Alias to tags. Lists tags.",
-    'tags': "List tags.",
-    'open': 'if a number, or multiple comma separated numbers are provided, without any command, each one will be treated as question ID, and will be opened in browser.',
-    'ls': "List recently opened links.",
-    'quit': "Exit the program normally.",
-    'help': "Shows available commands.",
-    'clear': "Clear output screen.",
-    'debug-toggle': "Toggle debug output.",
-    'crawler': "Start crawling for unscraped information about recently opened questions."
 }
 
 
