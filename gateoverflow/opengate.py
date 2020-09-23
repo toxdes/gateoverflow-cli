@@ -95,8 +95,6 @@ def startup_routine():
             f"Config file created at {str(config_file)}.\nYou can modify it according to your taste.")
     # load the config into state
     # parse the config file if exists, fallback to default ones.
-    # TODO: parser should differenciate types, such as integers for numbers and strings
-    # TODO: support utf-8 for config file
     try:
         user_config = toml.load(str(config_file))
         d("t", "successfully loaded config file into an object")

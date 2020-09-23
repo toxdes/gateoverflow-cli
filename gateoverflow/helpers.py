@@ -71,7 +71,6 @@ def parse_cmd(in_str):
                 nums.append(int(each))
         except:
             # fixes trailing commas and inputs like `,,,` `#,#,#`
-            # TODO: fix `#,3`
             if(len(each) < 1 or each == '#'):
                 continue
             # if multiple #'s are there, then it should be invalid
