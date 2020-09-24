@@ -26,7 +26,7 @@ build: clean git
 
 git:
 	# push code to github
-	git push origin master develop
+	git push origin master dev
 
 build-test: clean
 	# upload to test.pypi.org repo
