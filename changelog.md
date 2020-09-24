@@ -1,9 +1,11 @@
 # Changelog
 
-### v0.4.4 - v.0.4.6
+### v0.4.4 - v.0.4.7
 
 1. fixed `latest_version_check`.
 2. Fixing issues with the pypi's readme file (v0.4.5)
+3. Fixed bugs.
+4. Help message is improved.
 
 ### v0.4.3
 

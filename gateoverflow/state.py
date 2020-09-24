@@ -38,7 +38,6 @@ state = {
     # project root diretory
     'project_home': None,
 
-    # TODO: what if unicodes are not supported in terminal ?
     'shell_symbol': "→ ",
     'database_name': "gateoverflow.db",
     'db_path': None,

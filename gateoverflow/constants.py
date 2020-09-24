@@ -15,7 +15,8 @@ class parser_actions:
     LIST_QUESTIONS_OF_TAGS = 1,
     OPEN_QUESTIONS = 2,
     LIST_TAGS = 3,
-    ADD_QUESTIONS_TO_TAGS = 4
+    ADD_QUESTIONS_TO_TAGS = 4,
+    DO_NOTHING = 5
 
 
 metadata_api_base = "http://url-metadata.herokuapp.com"

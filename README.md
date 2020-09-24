@@ -3,7 +3,7 @@
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 The codebase is _heavily_ inspired by [this](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition) fizzbuzz implementation.
 
-#### Latest Release v0.4.6 :zap:
+#### Latest Release v0.4.7 :zap:
 
 Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
 
@@ -41,10 +41,12 @@ I think I'll write more about this later.
 
 1. Install [python](https://www.python.org/downloads/). You can skip this step if you already have python installed.
 
-2. Make sure you have `pip` installed by executing 
+2. Make sure you have `pip` installed by executing
+
 ```sh
 $ python -m pip --version
 ```
+
 If it says something like "Module not found: pip", then you should install it.
 
 2. Open Command Prompt / Terminal, and execute
@@ -58,6 +60,7 @@ $ pip install gateoverflow
 ```sh
 $ gateoverflow
 ```
+
 The supported commands and howto's are in [usage](#usage-fire) section.
 
 # Requirements :hammer_and_wrench:
@@ -158,6 +161,5 @@ I'm planning to add the following features, assuming I overcome the biggest chal
 3. Is `changelog.md` updated with changes?
 4. Is `README.md` updated with changes?
 5. Is Table Of Contents updated, if it is changed, which can be generated from here?
-6. Am I on `master` branch right now?
-7. `make build` succeeds without an error?
-8. Cool.
+6. `make build` succeeds without an error?
+7. Cool.
