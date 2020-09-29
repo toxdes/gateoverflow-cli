@@ -168,7 +168,8 @@ def get_metadata(link):
         res['desc'] = data['description']
         res['image_url'] = data['image']
     except Exception as e:
-        print('maybe internet is down. Error, Skipping!')
+        print(
+            'Maybe internet is down, or question_id is invalid, or other Error, Skipping!')
         d(print, f'Error: {e}')
         res = None
     return res

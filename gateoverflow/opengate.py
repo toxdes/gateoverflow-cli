@@ -89,7 +89,7 @@ def startup_routine():
     if not Path.exists(config_file):
         print('Creating default config...')
         # FIXME: use sample_config.toml instead of this string representation
-        config_file.write_text(constants.sample_config)
+        config_file.write_text(constants.sample_config, encoding="utf-8")
         d('t', 'wrote sample config.')
         print(
             f"Config file created at {str(config_file)}.\nYou can modify it according to your taste.")

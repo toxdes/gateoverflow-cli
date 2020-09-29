@@ -1,7 +1,7 @@
 import setuptools
 import re
 from gateoverflow import __version__
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
     # Remove emoji's from readme because pypi doesn't render it
     p = re.compile(':\w*:')
