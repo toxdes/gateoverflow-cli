@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 import re
+import webbrowser
 from pprint import pprint
 from dateutil.relativedelta import relativedelta
 import requests
@@ -104,15 +105,18 @@ def open_link(link):
     # google-chrome output is shown on the terminal
     d(print, f'opening {link} in browser')
     try:
-        # webbrowser.get().open(link)
-        subprocess.run(shlex.split(
-            f'xdg-open {link}'), stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+        webbrowser.get().open(link)
+        # subprocess.run(shlex.split(
+        #     f'xdg-open {link}'), stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     except:
-        # we're on termux / there's no native browser available
+        # we're on termux or android and there's no native browser available
         # there's an alternative to this
         # ask user to set $BROWSER='termux-open-url' / or do it during install?
-        subprocess.run(
-            shlex.split(f'termux-open-url {link}'), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        try:
+            subprocess.run(
+                shlex.split(f'termux-open-url {link}'), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except:
+            print("No browser found. Sorry.")
 
 # crawl metadata information, will be useful later
 
