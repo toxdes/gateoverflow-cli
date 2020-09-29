@@ -125,8 +125,12 @@ def list_command():
     for row in res:
         row = [str(each) for each in row]
         frow = []
-        for each in row:
+        for i, each in enumerate(row):
             temp = ''
+            d(print, f'{each} - {i}')
+            if i == 4:
+                frow.append(each)
+                continue
             if(each == 'None'):
                 temp = 'NA'
             if(len(each) > k):

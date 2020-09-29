@@ -3,7 +3,7 @@
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 The codebase is _heavily_ inspired by [this](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition) fizzbuzz implementation.
 
-#### Latest Release v0.4.7 :zap:
+#### Latest Release v0.4.8 :zap:
 
 Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
 
@@ -13,7 +13,7 @@ Read [full changelog](./changelog.md)
 
 - [Gateoverflow CLI](#gateoverflow-cli-tada) - [Latest Release v0.4.6](#latest-release-v046-zap)
 - [Table of Contents](#table-of-contents-clipboard)
-- [Motivation](#motivation-sleepy)
+- [Motivation](#motivation)
 - [Installation](#installation-rocket)
 - [Requirements](#requirements-hammer_and_wrench)
 - [Changelog](#changelog-pencil)
@@ -24,10 +24,10 @@ Read [full changelog](./changelog.md)
   - [Parser Commands](#parser-commands)
   - [Commands](#commands)
   - [Usage Examples](#usage-examples)
-- [Future](#future-sleepy)
+- [Future](#future)
 - [Release Checklist](#release-checklist-pencil2)
 
-# Motivation :sleepy:
+# Motivation
 
 Scanning QR codes from the book is really inefficient, so is the `Lists` feature of Gateoverflow Website.
 With this tool, one can open / manage those links with the question ids(which are right there, next to question title), create new lists (called as `tags` here cause it's one too many letters shorter than `lists`) of questions.
@@ -62,6 +62,17 @@ $ gateoverflow
 ```
 
 The supported commands and howto's are in [usage](#usage-fire) section.
+
+### Preview Release
+
+**Note** - Try this only if you know what you're doing.
+
+If you want to install a super early alpha release, which will be on `dev` branch.
+You can do,
+
+```sh
+$ pip install git+https://github.com/toxdes/gateoverflow-cli.git@dev
+```
 
 # Requirements :hammer_and_wrench:
 
@@ -140,7 +151,7 @@ Suppose the link to the question is `https://gateoverflow.in/6969`, then the que
 - Questions could even be added to multiple tags at the same time by doing something like `2424,23232,3234, #important, #good, #hard` to add those questions to specified tags.
 - `create` would create a new tag. E.g. `create #not-so-cool` to create a tag named `not-so-cool`.
 
-# Future :sleepy:
+# Future
 
 I'm planning to add the following features, assuming I overcome the biggest challenge of not abandoning this.
 

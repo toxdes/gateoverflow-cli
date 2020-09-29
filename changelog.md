@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.4.8
+
+1. Windows related bugfixes. It should run on windows as well, without any complaints.
+2. Reverted back to `webbrowser` module because, obviously, cross-platform compatibility.
+
 ### v0.4.4 - v.0.4.7
 
 1. fixed `latest_version_check`.
