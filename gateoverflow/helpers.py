@@ -189,11 +189,16 @@ def print_logo():
 
 
 def ask():
-    q = input("Do you want to continue?(yes/no) (default: no): ")
+    q = input("Do you want to continue?(y/n) (default: n): ")
     return q.lower() == 'yes' or q.lower() == 'y'
 
 
+def askPositive():
+    q = input("Do you want to continue?(y/n) (default: y): ")
+    return q.lower() != 'no' and q.lower() != 'n'
+
 # sends HTTP request to pypi and pattern matches with version string.
+
 
 def latest_version_check():
     print('Checking for latest update...')

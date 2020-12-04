@@ -14,7 +14,7 @@ from gateoverflow import constants
 from gateoverflow import actions as a
 from gateoverflow.state import state as s
 from gateoverflow.logger import d
-from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_logo, ask, latest_version_check
+from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_logo, ask, askPositive, latest_version_check
 modes = constants.modes
 
 
@@ -80,19 +80,21 @@ def startup_routine():
     # home folder may not exists, in that case it's a fresh start
     if not Path.exists(project_home):
         # it is a fresh start
-        print("It appears you are running this program for the first time, so I need to configure.")
-        print("Creating Project directory...")
+
+        print("It appears you are running this program for the first time, so I need to configure...\n")
+        print("Creating project home directory...", end="")
         Path.mkdir(project_home, exist_ok=True, parents=True)
         d('t', 'created path')
+        print(f"{constants.colors.GREEN}DONE.{constants.colors.END}")
 
     # config file may not exist
     if not Path.exists(config_file):
-        print('Creating default config...')
+        print('Creating default config...', end="")
         # FIXME: use sample_config.toml instead of this string representation
         config_file.write_text(constants.sample_config, encoding="utf-8")
         d('t', 'wrote sample config.')
         print(
-            f"Config file created at {str(config_file)}.\nYou can modify it according to your taste.")
+            f"{constants.colors.GREEN}DONE.{constants.colors.END} ({str(config_file)}).\n")
     # load the config into state
     # parse the config file if exists, fallback to default ones.
     try:
@@ -100,7 +102,7 @@ def startup_routine():
         d("t", "successfully loaded config file into an object")
     except Exception as e:
         d(print, f'{e}')
-        print("user config is invalid.")
+        print(f"{constants.colors.FAIL}user config is invalid.{constants.colors.END}")
         a.abort_program()
     # load the relevant config into state
     # TODO: hacky solution, improve this parser later
@@ -112,14 +114,16 @@ def startup_routine():
     d('t', 'user config loaded into state')
     db_file = Path.joinpath(project_home, f'{s["database_name"]}')
     if not Path.exists(db_file):
-        print("No default database found.")
-        print("Creating a brand new database...")
-        if(ask()):
+        print("No database found.")
+        print()
+        print("> Should I create a database?")
+        if(askPositive()):
             # Create a database
             s['db_path'] = str(db_file)
         else:
             print(
-                "Okay. There's no database, you should copy your *.db file to ${project_home}")
+                "Fine, you should copy your *.db file to ${project_home}")
+            a.abort_program()
     s['project_home'] = project_home
 
     if Path.exists(db_file):
@@ -131,16 +135,17 @@ def main():
     try:
         startup_routine()
     except Exception as e:
-        print("Startup failed.")
+        print(f"{constants.colors.FAIL}Startup failed.{constants.colors.END}")
         d(print, f'{e}')
         a.abort_program()
     if s["project_home"] == None:
-        print("No place to store my things.")
+        print(
+            f"{constants.colors.FAIL}No place to store my things.{constants.colors.END}")
         a.abort_program()
     # start sqlite connection
     if s["db_path"] == None:
         print("No database found. Creating a brand new database...")
-        if(ask()):
+        if(askPositive()):
             s["db_path"] = str(pathlib.Path.joinpath(
                 s["project_home"], f'{s["database_name"]}'))
         else:
@@ -165,14 +170,18 @@ def main():
     if res == None:
         d('t', "res is none for q.get_user")
         print("You haven't added your details yet.")
-        print("Please give me your username, and name...")
-        if(ask()):
+        print("\n> Details: username and name (one time only)")
+        if(askPositive()):
             username = input('Enter Username: ')
             name = input('Enter Name: ')
             if(len(username) > 0 and len(name) > 0):
                 s['user'] = constants.User(username, name)
                 c.execute(q.create_user, [username, name])
                 d('t', 'added user info after asking the same to the user')
+            else:
+                print(
+                    f"{constants.colors.FAIL}Why invalid details?{constants.colors.END}")
+                a.abort_program()
         else:
             d('t', 'user refused to give username and name')
             print("Fine, stay anonymous then")

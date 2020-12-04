@@ -2,8 +2,8 @@
 
 create_tables = '''
 CREATE TABLE IF NOT EXISTS user(
-    name varchar(200),
-    username varchar(200)
+    name TEXT,
+    username TEXT
 );
 CREATE TABLE IF NOT EXISTS recents(
     question_id INTEGER PRIMARY KEY,
@@ -14,13 +14,13 @@ CREATE TABLE IF NOT EXISTS recents(
     );
 CREATE TABLE IF NOT EXISTS metadata(
     question_id INTEGER PRIMARY KEY,
-    title VARCHAR(120) NOT NULL,
-    desc VARCHAR(240) NOT NULL,
-    image_url VARCHAR(240) NOT NULL
+    title TEXT NOT NULL,
+    desc TEXT NOT NULL,
+    image_url TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS tags(
     id INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1,
-    name varchar(240) NOT NULL,
+    name TEXT NOT NULL,
     questions_count INTEGER NOT NULL DEFAULT 0
 );
 
