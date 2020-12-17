@@ -249,7 +249,8 @@ def get_sample_config():
     #     f = open('sample_config.toml', 'r')
     # except:
     #     d(print, f"Error: Cannot open sample_config.toml, something's wrong with packaging.")
-    f = open(os.path.join(__package__, 'sample_config.toml'), 'r')
+    f = open(os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "sample_config.toml"), 'r')
     if f == None:
         a.abort_program()
     res = ''
