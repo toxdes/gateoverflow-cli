@@ -13,6 +13,7 @@ import json
 from gateoverflow.logger import d
 from gateoverflow import constants
 from gateoverflow.state import state as s
+from gateoverflow import actions as a
 from gateoverflow import queries as q
 from gateoverflow import __version__
 # TODO: oh poor me, please update this function later for avoiding embarrassement
@@ -239,3 +240,19 @@ def latest_version_check():
     else:
         print('You are already at a latest release.')
     pass
+
+
+def get_sample_config():
+    # TODO: finish this, return string of sample-config
+    f = None
+    # #try:
+    #     f = open('sample_config.toml', 'r')
+    # except:
+    #     d(print, f"Error: Cannot open sample_config.toml, something's wrong with packaging.")
+    f = open(os.path.join(__package__, 'sample_config.toml'), 'r')
+    if f == None:
+        a.abort_program()
+    res = ''
+    for line in f.readlines():
+        res = f'{res}{line}'
+    return res
