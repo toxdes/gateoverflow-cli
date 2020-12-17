@@ -14,7 +14,7 @@ from gateoverflow import constants
 from gateoverflow import actions as a
 from gateoverflow.state import state as s
 from gateoverflow.logger import d
-from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_logo, ask, askPositive, latest_version_check
+from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_title, ask, askPositive, latest_version_check
 modes = constants.modes
 
 
