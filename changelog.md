@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.5.0
+
+1. Added option to hide the title block (the logo-ish box of text in green color that appears on the top.), by setting `show_title` to either true or false.
+2. Added `sample_config.toml` as `package_data`, which means, default config file is no longer read from a string constant. It's read from the `default_config.toml` file which will be included in the package.
+3. Refactoring, Polished UI and Bugfixes.
+
 ### v0.4.8
 
 1. Windows related bugfixes. It should run on windows as well, without any complaints.
