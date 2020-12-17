@@ -19,6 +19,7 @@ setuptools.setup(
     install_requires=['tabulate',
                       'python-dateutil', 'requests', 'toml>=0.10'],
     packages=setuptools.find_packages(),
+    package_data={'gateoverflow': ['default_config.toml']},
     entry_points={
         "console_scripts": [
             "gateoverflow=gateoverflow.opengate:start",

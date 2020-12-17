@@ -3,7 +3,7 @@
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 The codebase is _heavily_ inspired by [this](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition) fizzbuzz implementation.
 
-#### Latest Release v0.4.8 :zap:
+#### Latest Release v0.5.0 :zap:
 
 Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
 
@@ -17,7 +17,8 @@ Read [full changelog](./changelog.md)
 - [Installation](#installation-rocket)
 - [Requirements](#requirements-hammer_and_wrench)
 - [Changelog](#changelog-pencil)
-  - [v0.4.0](#v040)
+  - [v0.5.0](#v050)
+  - [v0.4.8](#v048)
   - [v0.3.1](#v031)
   - [v0.2.0](#v020)
 - [Usage](#usage-fire)
@@ -90,7 +91,13 @@ Don't worry about this unless you are going to develop.
 
 # Changelog :pencil:
 
-### v0.4.0
+### v0.5.0
+
+1. Added option to hide the title block (the logo-ish box of text in green color that appears on the top.), by setting `show_title` to either true or false.
+2. Added `sample_config.toml` as `package_data`, which means, default config file is no longer read from a string constant. It's read from the `default_config.toml` file which will be included in the package.
+3. Refactoring, Polished UI and Bugfixes.
+
+### v0.4.8
 
 1. Added support for user defined configuration file, uses `config.toml` for it.
 2. The program now has it's own `project_home` directory.
@@ -106,12 +113,6 @@ Don't worry about this unless you are going to develop.
 4. Major refactor, queries and debug-outputs.
 5. debug mode.
 6. Available on PyPI now. Yay!
-
-### v0.2.0
-
-1. updated makefile to have a `build` target
-2. changed behaviour of `ls` command. Now it only lists recents
-3. refactor, and removing unnecessary code
 
 Read [full changelog](./changelog.md)
 
@@ -168,9 +169,9 @@ I'm planning to add the following features, assuming I overcome the biggest chal
 # Release Checklist :pencil2:
 
 1. Does it work?
-2. Are changes merged with master?
+2. Are latest changes fetched from remote?
 3. Is `changelog.md` updated with changes?
 4. Is `README.md` updated with changes?
-5. Is Table Of Contents updated, if it is changed, which can be generated from here?
+5. Is Table Of Contents updated, if it is changed?
 6. `make build` succeeds without an error?
 7. Cool.

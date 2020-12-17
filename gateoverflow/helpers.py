@@ -13,6 +13,7 @@ import json
 from gateoverflow.logger import d
 from gateoverflow import constants
 from gateoverflow.state import state as s
+from gateoverflow import actions as a
 from gateoverflow import queries as q
 from gateoverflow import __version__
 # TODO: oh poor me, please update this function later for avoiding embarrassement
@@ -182,18 +183,23 @@ def prettify_table(data, headers):
                         numalign='center', stralign='center'))
 
 
-def print_logo():
+def print_title():
     print(
         f'{constants.colors.GREEN}{constants.colors.BOLD}{prettify_table([[s["title_text"].upper()]], [])}{constants.colors.END}{constants.colors.END}')
     print(s['user'].greet())
 
 
 def ask():
-    q = input("Do you want to continue?(yes/no) (default: no): ")
+    q = input("Proceed? (y/n) (default: n): ")
     return q.lower() == 'yes' or q.lower() == 'y'
 
 
+def askPositive():
+    q = input("Proceed? (y/n) (default: y): ")
+    return q.lower() != 'no' and q.lower() != 'n'
+
 # sends HTTP request to pypi and pattern matches with version string.
+
 
 def latest_version_check():
     print('Checking for latest update...')
@@ -234,3 +240,20 @@ def latest_version_check():
     else:
         print('You are already at a latest release.')
     pass
+
+
+# reads default_config.toml file and returns string of it
+def get_default_config():
+    f = None
+    try:
+        f = open(os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), "default_config.toml"), 'r')
+    except:
+        d(print, f"Error: Cannot open default_config.toml, something's wrong with packaging.")
+    if f == None:
+        a.abort_program()
+    res = ''
+    for line in f.readlines():
+        res = f'{res}{line}'
+    f.close()
+    return res

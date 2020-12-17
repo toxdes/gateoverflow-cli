@@ -6,6 +6,11 @@ shell_symbol ="→ "
 
 # for ls command, how many records to show by default
 how_many=10
+
+# title means the Logo that appears on the top block
+# show or hide the title block
+show_title=true
+# text to be shown on the logo
 title_text="G a t e O v e r f l o w"
 
 # crawl_attempts_limit in order to delete possibly invalid question ids

@@ -38,8 +38,10 @@ state = {
     # project root diretory
     'project_home': None,
 
+    # show or hide the title text (the box)
+    'show_title': True,
     'shell_symbol': "→ ",
     'database_name': "gateoverflow.db",
     'db_path': None,
-    'user': constants.User()
+    'user': constants.User(),
 }
