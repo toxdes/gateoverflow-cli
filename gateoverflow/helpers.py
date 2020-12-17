@@ -190,12 +190,12 @@ def print_title():
 
 
 def ask():
-    q = input("Do you want to continue?(y/n) (default: n): ")
+    q = input("Proceed? (y/n) (default: n): ")
     return q.lower() == 'yes' or q.lower() == 'y'
 
 
 def askPositive():
-    q = input("Do you want to continue?(y/n) (default: y): ")
+    q = input("Proceed? (y/n) (default: y): ")
     return q.lower() != 'no' and q.lower() != 'n'
 
 # sends HTTP request to pypi and pattern matches with version string.
@@ -242,18 +242,18 @@ def latest_version_check():
     pass
 
 
-def get_sample_config():
-    # TODO: finish this, return string of sample-config
+# reads default_config.toml file and returns string of it
+def get_default_config():
     f = None
-    # #try:
-    #     f = open('sample_config.toml', 'r')
-    # except:
-    #     d(print, f"Error: Cannot open sample_config.toml, something's wrong with packaging.")
-    f = open(os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), "sample_config.toml"), 'r')
+    try:
+        f = open(os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), "default_config.toml"), 'r')
+    except:
+        d(print, f"Error: Cannot open default_config.toml, something's wrong with packaging.")
     if f == None:
         a.abort_program()
     res = ''
     for line in f.readlines():
         res = f'{res}{line}'
+    f.close()
     return res

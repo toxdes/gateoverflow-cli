@@ -14,7 +14,7 @@ from gateoverflow import constants
 from gateoverflow import actions as a
 from gateoverflow.state import state as s
 from gateoverflow.logger import d
-from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_title, ask, askPositive, get_sample_config, latest_version_check
+from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_title, ask, askPositive, get_default_config, latest_version_check
 modes = constants.modes
 
 
@@ -90,7 +90,7 @@ def startup_routine():
     # config file may not exist
     if not Path.exists(config_file):
         print('Creating default config...', end="")
-        config_file.write_text(get_sample_config(), encoding="utf-8")
+        config_file.write_text(get_default_config(), encoding="utf-8")
         d('t', 'wrote sample config.')
         print(
             f"{constants.colors.GREEN}DONE.{constants.colors.END} ({str(config_file)}).\n")
