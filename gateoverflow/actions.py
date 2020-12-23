@@ -195,7 +195,7 @@ class Parser:
                     each, each])
             else:
                 # insert
-                c.execute(q.insert_into_recents, [each])
+                c.execute(q.insert_into_recents, [each, s['session_id']])
             open_link(f'https://gateoverflow.in/{each}')
         s['conn'].commit()
         print('Done!')

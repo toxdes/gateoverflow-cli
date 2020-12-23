@@ -7,6 +7,7 @@ import random as r
 import pathlib
 from configparser import ConfigParser
 import toml
+import atexit
 # local imports
 from gateoverflow import queries as q
 from gateoverflow import __version__
@@ -22,7 +23,10 @@ def conn(name):
     return sqlite3.connect(name)
 
 
-def clean(con):
+def cleanup(con):
+    d('t', "Performing cleanup operations")
+    con.cursor().execute(q.end_session, [s['session_id']])
+    con.commit()
     con.close()
 
 
@@ -56,6 +60,8 @@ def act(cmd):
             s["list_string"] = f'ls {s["how_many"]}'
 
     d(print, f'action: {action}')
+    if(action == 'session-id'):
+        print(s['session_id'])
     if action not in switcher.keys():
         action = 'invalid'
     f = switcher[action]
@@ -191,15 +197,22 @@ def main():
         res = [str(each) for each in res]
         s['user'] = constants.User(res[1], res[0])
     # c.executescript(q.insert_dummy_values)
+    try:
+        c.execute(q.start_session)
+        s['session_id'] = c.lastrowid
+    except:
+        d('t', "Failed to start a session")
+    atexit.register(cleanup, connection)
     a.clear_screen()
     s['switcher'] = a.get_switcher()
-    for row in c.execute(q.get_all):
-        d(pprint, f'[test]: row is: {row}')
+    if s['DEBUG'] == True:
+        for row in c.execute(q.get_all):
+            d(pprint, f'[test]: row is: {row}')
     # Display info, and take input
     while(not s['stop']):
         act(poll())
+    # c.execute(q.delete_invalid_sessions)
     connection.commit()
-    clean(connection)
 
 
 def start():
