@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS metadata(
 );
 CREATE TABLE IF NOT EXISTS tags(
     id INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL UNIQUE,
     questions_count INTEGER NOT NULL DEFAULT 0
 );
 
@@ -29,11 +29,17 @@ CREATE TABLE IF NOT EXISTS tq_relation(
     question_id INTEGER NOT NULL REFERENCES recents(question_id),
     tag_id INTEGER NOT NULL REFERENCES tags(id)
 );
+
+CREATE TABLE IF NOT EXISTS session(
+    id INTEGER PRIMARY KEY DEFAULT 1,
+    start_time INTEGER(4) NOT NULL DEFAULT (STRFTIME('%s', 'now')),
+    end_time INTEGER(4) NOT NULL DEFAULT (STRFTIME('%s', 'now'))
+)
 '''
 
 # TODO: Find a better way to change existing database-structure on the fly, like adding a column
 alter_tables = '''
-
+ALTER TABLE recents ADD COLUMN session_id INTEGER NOT NULL DEFAULT 1;
 '''
 create_triggers = '''
 CREATE TRIGGER IF NOT EXISTS [update_last_visited]
@@ -76,7 +82,7 @@ update_metadata_scraped_questions = 'UPDATE recents SET metadata_scraped=1 WHERE
 
 update_visited_count = "UPDATE recents SET visited_count=(SELECT visited_count FROM recents WHERE question_id=?)+1  where question_id=?"
 get_question = "SELECT * FROM recents WHERE question_id=?"
-insert_into_recents = "INSERT INTO recents(question_id) values(?)"
+insert_into_recents = "INSERT or UPDATE INTO recents(question_id, session_id) values(?,?)"
 
 get_recent = '''
 select recents.question_id, title, desc, visited_count, last_visited from
@@ -92,3 +98,7 @@ delete_invalid_questions = "DELETE from recents where crawl_attempts>?"
 create_user = "INSERT OR REPLACE INTO user(username, name) VALUES (?,?);"
 get_user = "SELECT * from user;"
 update_questions_count = 'UPDATE tags SET questions_count=questions_count+1 WHERE id=?'
+start_session = "INSERT INTO session DEFAULT VALUES;"
+end_session = "UPDATE session SET end_time=(STRFTIME('%s','NOW')) where id=?"
+# when the program is abruptly closed, i.e. by external kill signal, we might not have a chance to properly update, in such case start_time and end_time will be same, which are not necessary, and hence shall be removed, not using it for now cause I can apparently call a cleanup function on interrupt anyway
+delete_invalid_sessions = "DELETE from session where start_time=end_time"

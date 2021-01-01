@@ -3,7 +3,7 @@ from gateoverflow.state import state as s
 from gateoverflow import constants
 from gateoverflow.logger import d
 from gateoverflow import queries as q
-from gateoverflow.helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_title, ask, latest_version_check
+from gateoverflow.helpers import readable_date, open_link, uncrawled_metadata_count, crawl_metadata, prettify_table, print_title, ask, latest_version_check, askPositive
 modes = constants.modes
 
 
@@ -29,16 +29,22 @@ Commands
         Show this help message.
     
     ls <n>
-        List recently opened links, at most 'n' records.
+        List recently opened links, at most 'n' records. 'n' is 10 by default.
     
     cls, clear
         Clear the screen / terminal.
     
     debug-toggle
-        Toggle the debug output.
+        Show / hide the debug output.
     
-    crawler
+    crawl, crawler
         Scrape metadata of the recently opened questions so that they are more readable.
+
+    create <tags...>
+        Creates tag(s), where tags are comma separated strings.
+    
+    #
+        Lists all tags.
 '''
 
 PARSER_USAGE_HELP = '''
@@ -51,12 +57,12 @@ Usage Examples (Parser)
         Lists the questions in `#wrongly-attempted`, sorted with mostly visited.
 
     $ tags
-        Lists all of the available tags. `#recent` is a default tag, which stores all opened `questions`
+        Lists all the tags.
 
     $ 2424,23232,3234, #important, #good, #hard 
-        Questions could even be added to multiple tags at the same time by doing something like  to add those questions to specified tags.
+        Questions could even be added to multiple tags at the same time by doing something like this to add those questions to specified tags.
 
-    $ create
+    $ create <tags...>
          create a new tag. E.g. `create #not-so-cool` to create a tag named `not-so-cool`.
 '''
 
@@ -195,7 +201,7 @@ class Parser:
                     each, each])
             else:
                 # insert
-                c.execute(q.insert_into_recents, [each])
+                c.execute(q.insert_into_recents, [each, s['session_id']])
             open_link(f'https://gateoverflow.in/{each}')
         s['conn'].commit()
         print('Done!')
@@ -282,6 +288,35 @@ class Parser:
         s['conn'].commit()
 
     @staticmethod
+    def create_tags():
+        c = s['cursor']
+        tags = s['tags']
+        res = c.execute(q.get_tags)
+        tags_in_db = []
+        for each in res:
+            tags_in_db.append(each[0])
+        non_existant_tags = []
+        existant_tags = []
+        tags = [a[1:] for a in tags]
+        for each in tags:
+            if each not in tags_in_db:
+                print(f'#{each} does not exist.')
+                non_existant_tags.append(each)
+                continue
+            existant_tags.append(each)
+        d(print, f'Non existant tags: {non_existant_tags}')
+        d(print, f'Existant tags: {existant_tags}')
+        create_tags_script = ''
+        for each in non_existant_tags:
+            # FIXME: extract this y/n to a function.
+            print(f'> #{each} does not exist. Create?')
+            if(askPositive()):
+                # FIXME: move this to queries.py for safety :)
+                create_tags_script = f'{create_tags_script}\nINSERT INTO tags(name,questions_count) VALUES (\'{each}\',1);'
+        c.executescript(create_tags_script)
+        s['conn'].commit()
+
+    @staticmethod
     def do_nothing():
         pass
 
@@ -303,6 +338,9 @@ def handle_parser_action():
     if s['parser_action'] == pa.ADD_QUESTIONS_TO_TAGS:
         Parser.add_questions_to_tags()
         return
+    if s['parser_action'] == pa.CREATE_TAGS:
+        Parser.create_tags()
+        return
     invalid_command()
 
 
@@ -310,13 +348,15 @@ def handle_parser_action():
 switcher = {
     '': do_nothing,
     'q': exit_program,
-    'h': print_help,
-    'ls': list_command,
-    'crawler': crawler,
-    'debug-toggle': debug_toggle,
     'quit': exit_program,
+    'h': print_help,
     'help': print_help,
+    'crawl': crawler,
+    'crawler': crawler,
+    'cls': clear_screen,
     'clear': clear_screen,
+    'ls': list_command,
+    'debug-toggle': debug_toggle,
     'parser': handle_parser_action,
     'invalid': invalid_command,
 }

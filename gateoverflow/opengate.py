@@ -7,6 +7,7 @@ import random as r
 import pathlib
 from configparser import ConfigParser
 import toml
+import atexit
 # local imports
 from gateoverflow import queries as q
 from gateoverflow import __version__
@@ -14,7 +15,7 @@ from gateoverflow import constants
 from gateoverflow import actions as a
 from gateoverflow.state import state as s
 from gateoverflow.logger import d
-from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_title, ask, askPositive, get_default_config, latest_version_check
+from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_title, ask, askPositive, get_default_config, latest_version_check, get_countdown_days
 modes = constants.modes
 
 
@@ -22,7 +23,10 @@ def conn(name):
     return sqlite3.connect(name)
 
 
-def clean(con):
+def cleanup(con):
+    d('t', "Performing cleanup operations")
+    con.cursor().execute(q.end_session, [s['session_id']])
+    con.commit()
     con.close()
 
 
@@ -30,9 +34,12 @@ def poll():
     symbol = s['shell_symbol']
     prefix = ''
     if s['DEBUG'] == True:
-        prefix = f'[debug-mode]'
+        prefix = f'[{constants.colors.WARNING}debug-mode{constants.colors.END}]'
     if s["mode"] != modes.DEFAULT:
         prefix = f'{prefix}[{s["mode"]}]'
+    days = get_countdown_days()
+    if 'show_countdown' in s and s['show_countdown'] and days != None:
+        prefix = f'{prefix}[{constants.colors.GREEN}ETA {get_countdown_days()} days{constants.colors.END}]'
     symbol = f'{prefix}{symbol}'
     action = input(symbol)
     return action
@@ -43,11 +50,15 @@ def act(cmd):
     action = cmd.lower().split(' ')[0]
     switcher = s["switcher"]
     err, questions, tags, parser_action = parse_cmd(cmd)
-    if not err:
-        s["questions_list"] = questions
-        s["tags"] = tags
-        s["parser_action"] = parser_action
-        action = 'parser'
+
+    if action == 'create':
+        cmd = cmd[6:]
+        err, questions, tags, parser_action = parse_cmd(cmd)
+        if parser_action == constants.parser_actions.LIST_QUESTIONS_OF_TAGS or parser_action == constants.parser_actions.LIST_TAGS:
+            parser_action = constants.parser_actions.CREATE_TAGS
+            err = False
+        d('t', 'create tags command')
+        d(print, f'cmd: {cmd}')
 
     if action == 'ls':
         if(len(cmd.split(' ')) > 1):
@@ -55,7 +66,21 @@ def act(cmd):
         else:
             s["list_string"] = f'ls {s["how_many"]}'
 
+    if not err:
+        s["questions_list"] = questions
+        s["tags"] = tags
+        s["parser_action"] = parser_action
+        action = 'parser'
+
     d(print, f'action: {action}')
+    if action == 'parser':
+        d(print, f'err: {err}')
+        d(print, f'tags: {tags}')
+        d(print, f'questions: {questions}')
+        d(print, f'parser_action: {parser_action}')
+
+    if(action == 'session-id'):
+        print(s['session_id'])
     if action not in switcher.keys():
         action = 'invalid'
     f = switcher[action]
@@ -191,15 +216,22 @@ def main():
         res = [str(each) for each in res]
         s['user'] = constants.User(res[1], res[0])
     # c.executescript(q.insert_dummy_values)
+    try:
+        c.execute(q.start_session)
+        s['session_id'] = c.lastrowid
+    except:
+        d('t', "Failed to start a session")
+    atexit.register(cleanup, connection)
     a.clear_screen()
     s['switcher'] = a.get_switcher()
-    for row in c.execute(q.get_all):
-        d(pprint, f'[test]: row is: {row}')
+    if s['DEBUG'] == True:
+        for row in c.execute(q.get_all):
+            d(pprint, f'[test]: row is: {row}')
     # Display info, and take input
     while(not s['stop']):
         act(poll())
+    # c.execute(q.delete_invalid_sessions)
     connection.commit()
-    clean(connection)
 
 
 def start():

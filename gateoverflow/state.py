@@ -1,5 +1,4 @@
 # global variables
-# controls polling, setting to true exits the program
 from gateoverflow import constants
 # from gateoverflow.helpers import prettify_table
 
@@ -8,7 +7,6 @@ state = {
     'stop': False,
     'mode': constants.modes.DEFAULT,
     'switcher': None,
-    # 'questions_list': [22, 23, 12, 232, 2]
     'questions_list': [],
     'tags': [],
     'parser_action': None,
@@ -44,4 +42,11 @@ state = {
     'database_name': "gateoverflow.db",
     'db_path': None,
     'user': constants.User(),
+
+    # show countdown or not?
+    'show_countdown': False,
+
+    # Exam Date (for showing remaining days until that particular date)
+    # date format is dd-mm-yyyy
+    'exam_date': '13-02-2020'
 }
