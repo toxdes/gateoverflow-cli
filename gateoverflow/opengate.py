@@ -15,7 +15,7 @@ from gateoverflow import constants
 from gateoverflow import actions as a
 from gateoverflow.state import state as s
 from gateoverflow.logger import d
-from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_title, ask, askPositive, get_default_config, latest_version_check
+from gateoverflow.helpers import crawl_metadata, uncrawled_metadata_count, parse_cmd, prettify_table, print_title, ask, askPositive, get_default_config, latest_version_check, get_countdown_days
 modes = constants.modes
 
 
@@ -34,9 +34,12 @@ def poll():
     symbol = s['shell_symbol']
     prefix = ''
     if s['DEBUG'] == True:
-        prefix = f'[debug-mode]'
+        prefix = f'[{constants.colors.WARNING}debug-mode{constants.colors.END}]'
     if s["mode"] != modes.DEFAULT:
         prefix = f'{prefix}[{s["mode"]}]'
+    days = get_countdown_days()
+    if 'show_countdown' in s and s['show_countdown'] and days != None:
+        prefix = f'{prefix}[{constants.colors.GREEN}ETA {get_countdown_days()} days{constants.colors.END}]'
     symbol = f'{prefix}{symbol}'
     action = input(symbol)
     return action

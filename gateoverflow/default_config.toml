@@ -20,3 +20,8 @@ crawl_attempts_limit = 5
 # if the data has more characters than this limit, it is truncated with adding "..." in the end
 # for example, "bruhbruhbruhbruh" will turn into "bruh..." if column width is 7
 column_width = 12
+
+# Exam Date (for showing remaining days until that particular date)
+# date format is dd-mm-yyyy
+exam_date = "13-02-2020"
+show_countdown = true

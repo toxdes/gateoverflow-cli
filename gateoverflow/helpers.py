@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 import shlex
 from tabulate import tabulate
 import os
@@ -257,3 +257,19 @@ def get_default_config():
         res = f'{res}{line}'
     f.close()
     return res
+
+
+def get_countdown_days():
+    if 'exam_date' not in s:
+        return None
+    end_date = None
+    try:
+        t = str(s['exam_date'])
+        t = [int(a) for a in t.split('-')]
+        end_date = date(t[2], t[1], t[0])
+    except:
+        d(print, f'Invalid date for countdown.')
+        return end_date
+    start_date = date.today()
+    days = (end_date - start_date).days
+    return days

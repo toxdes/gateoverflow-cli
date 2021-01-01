@@ -44,4 +44,8 @@ state = {
     'database_name': "gateoverflow.db",
     'db_path': None,
     'user': constants.User(),
+
+    # show countdown or not?
+    'show_countdown': False,
+    'exam_date': '13-02-2020'
 }
