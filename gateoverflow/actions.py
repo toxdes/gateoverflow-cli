@@ -29,19 +29,22 @@ Commands
         Show this help message.
     
     ls <n>
-        List recently opened links, at most 'n' records.
+        List recently opened links, at most 'n' records. 'n' is 10 by default.
     
     cls, clear
         Clear the screen / terminal.
     
     debug-toggle
-        Toggle the debug output.
+        Show / hide the debug output.
     
-    crawler
+    crawl, crawler
         Scrape metadata of the recently opened questions so that they are more readable.
 
     create <tags...>
         Creates tag(s), where tags are comma separated strings.
+    
+    #
+        Lists all tags.
 '''
 
 PARSER_USAGE_HELP = '''
@@ -54,7 +57,7 @@ Usage Examples (Parser)
         Lists the questions in `#wrongly-attempted`, sorted with mostly visited.
 
     $ tags
-        Lists all of the available tags. `#recent` is a default tag, which stores all opened `questions`
+        Lists all the tags.
 
     $ 2424,23232,3234, #important, #good, #hard 
         Questions could even be added to multiple tags at the same time by doing something like this to add those questions to specified tags.
@@ -345,14 +348,15 @@ def handle_parser_action():
 switcher = {
     '': do_nothing,
     'q': exit_program,
-    'h': print_help,
-    'ls': list_command,
-    'crawler': crawler,
-    'debug-toggle': debug_toggle,
     'quit': exit_program,
+    'h': print_help,
     'help': print_help,
-    'clear': clear_screen,
+    'crawl': crawler,
+    'crawler': crawler,
     'cls': clear_screen,
+    'clear': clear_screen,
+    'ls': list_command,
+    'debug-toggle': debug_toggle,
     'parser': handle_parser_action,
     'invalid': invalid_command,
 }
