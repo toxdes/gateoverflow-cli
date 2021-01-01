@@ -50,11 +50,15 @@ def act(cmd):
     action = cmd.lower().split(' ')[0]
     switcher = s["switcher"]
     err, questions, tags, parser_action = parse_cmd(cmd)
-    if not err:
-        s["questions_list"] = questions
-        s["tags"] = tags
-        s["parser_action"] = parser_action
-        action = 'parser'
+
+    if action == 'create':
+        cmd = cmd[6:]
+        err, questions, tags, parser_action = parse_cmd(cmd)
+        if parser_action == constants.parser_actions.LIST_QUESTIONS_OF_TAGS or parser_action == constants.parser_actions.LIST_TAGS:
+            parser_action = constants.parser_actions.CREATE_TAGS
+            err = False
+        d('t', 'create tags command')
+        d(print, f'cmd: {cmd}')
 
     if action == 'ls':
         if(len(cmd.split(' ')) > 1):
@@ -62,7 +66,19 @@ def act(cmd):
         else:
             s["list_string"] = f'ls {s["how_many"]}'
 
+    if not err:
+        s["questions_list"] = questions
+        s["tags"] = tags
+        s["parser_action"] = parser_action
+        action = 'parser'
+
     d(print, f'action: {action}')
+    if action == 'parser':
+        d(print, f'err: {err}')
+        d(print, f'tags: {tags}')
+        d(print, f'questions: {questions}')
+        d(print, f'parser_action: {parser_action}')
+
     if(action == 'session-id'):
         print(s['session_id'])
     if action not in switcher.keys():
