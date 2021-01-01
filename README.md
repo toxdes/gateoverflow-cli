@@ -3,7 +3,7 @@
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 The codebase is _heavily_ inspired by [this](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition) fizzbuzz implementation.
 
-#### Latest Release v0.5.0 :zap:
+#### Latest Release v0.5.1 :zap:
 
 Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
 
@@ -11,16 +11,14 @@ Read [full changelog](./changelog.md)
 
 # Table of Contents :clipboard:
 
-- [Gateoverflow CLI](#gateoverflow-cli-tada) - [Latest Release v0.4.6](#latest-release-v046-zap)
+- [Gateoverflow CLI](#gateoverflow-cli-tada) - [Latest Release v0.5.1](#latest-release-v051-zap)
 - [Table of Contents](#table-of-contents-clipboard)
 - [Motivation](#motivation)
 - [Installation](#installation-rocket)
 - [Requirements](#requirements-hammer_and_wrench)
 - [Changelog](#changelog-pencil)
+  - [v0.5.1](#v051)
   - [v0.5.0](#v050)
-  - [v0.4.8](#v048)
-  - [v0.3.1](#v031)
-  - [v0.2.0](#v020)
 - [Usage](#usage-fire)
   - [Parser Commands](#parser-commands)
   - [Commands](#commands)
@@ -91,28 +89,18 @@ Don't worry about this unless you are going to develop.
 
 # Changelog :pencil:
 
+### v0.5.1
+
+1. Added functionality to keep track of time spent by the user on this tool.
+2. Added countdown in days, with two config options `show_countdown` and `exam_date`. If enabled, it shows days remaining until `exam_date`.
+3. `create` command was not implemented until now :)
+4. Added few aliases, bugfixes and polishing.
+
 ### v0.5.0
 
 1. Added option to hide the title block (the logo-ish box of text in green color that appears on the top.), by setting `show_title` to either true or false.
 2. Added `sample_config.toml` as `package_data`, which means, default config file is no longer read from a string constant. It's read from the `default_config.toml` file which will be included in the package.
 3. Refactoring, Polished UI and Bugfixes.
-
-### v0.4.8
-
-1. Added support for user defined configuration file, uses `config.toml` for it.
-2. The program now has it's own `project_home` directory.
-3. Added a `user` table, which stores meta information about the database.
-4. Introduced colors for the text with ANSI escape characters
-5. Bugfixes, refactor and gucci.
-
-### v0.3.1
-
-1. listing recents shows title and description of the question now.
-2. delete possibly invalid questions
-3. Parser barely works, as specified in [link](###parser-commands)
-4. Major refactor, queries and debug-outputs.
-5. debug mode.
-6. Available on PyPI now. Yay!
 
 Read [full changelog](./changelog.md)
 

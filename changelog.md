@@ -1,5 +1,15 @@
 # Changelog
 
+### v0.5.1
+
+1. Now we record sessions, with `start_time` and `end_time`, which would be imortant later on for statistical reasons. For this, `recents` table is altered, `session_id` column is added.
+2. Added countdown in days, with two config options `show_countdown` and `exam_date`. If enabled, it shows days remaining until `exam_date`.
+3. `create` command was not implemented until now :)
+4. Added aliases
+   - `crawl` -> `crawler`.
+   - `cls` -> `clear`
+5. Few bugfixes, and a little bit of polishing as usual.
+
 ### v0.5.0
 
 1. Added option to hide the title block (the logo-ish box of text in green color that appears on the top.), by setting `show_title` to either true or false.
