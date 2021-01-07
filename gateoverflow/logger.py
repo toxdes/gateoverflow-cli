@@ -9,7 +9,6 @@ from gateoverflow import constants
 
 
 # TODO: Write all debug output to a debug file
-
 def d(f, args):
     if s['DEBUG'] == True:
         if(f == 't'):
