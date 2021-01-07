@@ -82,7 +82,7 @@ update_metadata_scraped_questions = 'UPDATE recents SET metadata_scraped=1 WHERE
 
 update_visited_count = "UPDATE recents SET visited_count=(SELECT visited_count FROM recents WHERE question_id=?)+1  where question_id=?"
 get_question = "SELECT * FROM recents WHERE question_id=?"
-insert_into_recents = "INSERT or UPDATE INTO recents(question_id, session_id) values(?,?)"
+insert_into_recents = "INSERT or REPLACE INTO recents(question_id, session_id) values(?,?)"
 
 get_recent = '''
 select recents.question_id, title, desc, visited_count, last_visited from
