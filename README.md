@@ -92,7 +92,7 @@ Don't worry about this unless you are going to develop.
 ### v0.5.1
 
 1. Added functionality to keep track of time spent by the user on this tool.
-2. Added countdown in days, with two config options `show_countdown` and `exam_date`. If enabled, it shows days remaining until `exam_date`.
+2. Added countdown in days, with two config options `show_eta_countdown` and `eta_date`. If enabled, it shows days remaining until `eta_date`.
 3. `create` command was not implemented until now :)
 4. Added few aliases, bugfixes and polishing.
 

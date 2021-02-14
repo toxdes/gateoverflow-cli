@@ -260,11 +260,11 @@ def get_default_config():
 
 
 def get_countdown_days():
-    if 'exam_date' not in s:
+    if 'eta_date' not in s:
         return None
     end_date = None
     try:
-        t = str(s['exam_date'])
+        t = str(s['eta_date'])
         t = [int(a) for a in t.split('-')]
         end_date = date(t[2], t[1], t[0])
     except:

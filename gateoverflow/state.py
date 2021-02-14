@@ -44,9 +44,11 @@ state = {
     'user': constants.User(),
 
     # show countdown or not?
-    'show_countdown': False,
+    'show_eta_countdown': False,
 
-    # Exam Date (for showing remaining days until that particular date)
+    # ETA - Deadline/ Exam Date (for showing remaining days until that particular date)
     # date format is dd-mm-yyyy
-    'exam_date': '13-02-2020'
+    'eta_date': '13-02-2020',
+    # details about the ETA task you've been wanting to create
+    'eta_note': 'no note saved. You may want to check config file.'
 }

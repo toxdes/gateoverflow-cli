@@ -38,7 +38,7 @@ def poll():
     if s["mode"] != modes.DEFAULT:
         prefix = f'{prefix}[{s["mode"]}]'
     days = get_countdown_days()
-    if 'show_countdown' in s and s['show_countdown'] and days != None:
+    if 'show_eta_countdown' in s and s['show_eta_countdown'] and days != None:
         prefix = f'{prefix}[{constants.colors.GREEN}ETA {get_countdown_days()} days{constants.colors.END}]'
     symbol = f'{prefix}{symbol}'
     action = input(symbol)
