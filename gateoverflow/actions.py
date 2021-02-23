@@ -45,6 +45,10 @@ Commands
     
     #
         Lists all tags.
+    
+    e, eta
+        Show the ETA message set in the config file.
+        
 '''
 
 PARSER_USAGE_HELP = '''
@@ -344,6 +348,11 @@ def handle_parser_action():
     invalid_command()
 
 
+def show_eta_note():
+    print("-------- [ ETA Note ] --------")
+    print(s['eta_note'])
+
+
 # default mode switcher
 switcher = {
     '': do_nothing,
@@ -359,6 +368,8 @@ switcher = {
     'debug-toggle': debug_toggle,
     'parser': handle_parser_action,
     'invalid': invalid_command,
+    'eta': show_eta_note,
+    'e': show_eta_note
 }
 
 

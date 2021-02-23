@@ -23,5 +23,6 @@ column_width = 12
 
 # Exam Date (for showing remaining days until that particular date)
 # date format is dd-mm-yyyy
-exam_date = "13-02-2020"
-show_countdown = true
+eta_date = "13-02-2021"
+show_eta_countdown = true
+eta_note = "Complete Algorithms, take subject tests. Note down the mistakes as well."
