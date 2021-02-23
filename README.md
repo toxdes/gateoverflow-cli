@@ -3,7 +3,7 @@
 open / manage links with the question ids(which are right there, next to question title), create new lists of questions, update them etc.
 The codebase is _heavily_ inspired by [this](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition) fizzbuzz implementation.
 
-#### Latest Release v0.5.2 :zap:
+#### Latest Release v0.5.3 :zap:
 
 Available to install through pip [(pypi)](https://pypi.org/project/gateoverflow).
 
@@ -11,7 +11,7 @@ Read [full changelog](./changelog.md)
 
 # Table of Contents :clipboard:
 
-- [Gateoverflow CLI](#gateoverflow-cli-tada) - [Latest Release v0.5.1](#latest-release-v051-zap)
+- [Gateoverflow CLI](#gateoverflow-cli-tada) - [Latest Release v0.5.3](#latest-release-v051-zap)
 - [Table of Contents](#table-of-contents-clipboard)
 - [Motivation](#motivation)
 - [Installation](#installation-rocket)
@@ -89,12 +89,13 @@ Don't worry about this unless you are going to develop.
 
 # Changelog :pencil:
 
-### v0.5.1
+### v0.5.3
 
+1. Added `eta` command to show note of ETA from config file.
 1. Added functionality to keep track of time spent by the user on this tool.
-2. Added countdown in days, with two config options `show_eta_countdown` and `eta_date`. If enabled, it shows days remaining until `eta_date`.
-3. `create` command was not implemented until now :)
-4. Added few aliases, bugfixes and polishing.
+1. Added countdown in days, with two config options `show_eta_countdown` and `eta_date`. If enabled, it shows days remaining until `eta_date`.
+1. `create` command was not implemented until now :)
+1. Added few aliases, bugfixes and polishing.
 
 ### v0.5.0
 

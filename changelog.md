@@ -1,5 +1,17 @@
 # Changelog
 
+### v0.5.3
+
+1. Added `eta`command (`e` for shorthand), and generalized `exam_date` to `eta_date`, that way, user can add notes for their ETA.
+   For example,
+
+   ```sh
+   $ eta
+   ------ [ETA NOTE] ------
+   Complete Algorithms, and solve questions.
+   Also try NOT to see solutions.
+   ```
+
 ### v0.5.1
 
 1. Now we record sessions, with `start_time` and `end_time`, which would be imortant later on for statistical reasons. For this, `recents` table is altered, `session_id` column is added.
